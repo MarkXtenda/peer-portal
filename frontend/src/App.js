@@ -1,0 +1,53 @@
+import React, {lazy, Suspense, useEffect} from 'react';
+import logo from './logo.svg';
+import { Navigate, Route, Routes } from 'react-router';
+import {ErrorBoundary} from 'react-error-boundary'
+import Login from './components/login-signup-components/Login';
+import Homepage from './components/Homepage';
+import Sidebar from './components/chat-components/Sidebar';
+import Channels from './components/chat-components/Channels';
+import UserPage from './components/chat-components/UserPage';
+import './App.css';
+import Signup from './components/login-signup-components/Signup';
+import { useSelector, useDispatch } from 'react-redux';
+import Channel from './components/features/channel/Channel';
+import {chooseChannel} from './components/features/channel/ChannelSlice'
+// rfce 
+function App() {
+  const user = true
+  const state = useSelector((state)=>state.channel)
+
+  const ErrorFallback=({error,resetErrorBoundary})=>{
+    return (<>
+        <img src='https://i.imgur.com/lKJiT77.png'/>
+        <h1>Sorry this page is broken</h1>
+        <button onClick={resetErrorBoundary}>Try again</button>
+    </>)
+  }
+  return (
+    <div className="App">
+      <main>
+        {!user && <Navigate to='/login'/>}
+        {user && <Navigate from="/" to="/channels" />}
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/channels" element={<UserPage/>}>
+              <Route path="@me" element={<Homepage />}/>
+              <Route path=":serverId" element={
+                <Sidebar>
+                  <Channels />
+                </Sidebar>
+              } />
+            </Route>
+          </Routes>
+          </Suspense>
+        </ErrorBoundary>
+      </main>
+    </div>
+  );
+}
+
+export default App;

@@ -1,0 +1,44 @@
+.bg {
+    background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .card {
+    margin-top: 100px;
+  }
+  
+  .card-header {
+    background-color: #7289da;
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #7289da;
+    border-color: #7289da;
+  }
+  
+  .btn-primary:hover {
+    background-color: #677bc4;
+    border-color: #677bc4;
+  }
+  
+  .form-check-input:checked ~ .form-check-label {
+    color: #7289da;
+  }
+  
+  .form-check-input:focus ~ .form-check-label {
+    color: #7289da;
+  }
+  
+  .form-control:focus {
+    border-color: #7289da;
+    box-shadow: none;
+  }
+  
+  .card-link {
+    color: #7289da;
+  }
+  
