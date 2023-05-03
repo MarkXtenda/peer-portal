@@ -1,6 +1,6 @@
 class Channel < ApplicationRecord
-  belongs_to :user
   has_many :messages, dependent: :destroy
+  belongs_to :user
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
@@ -8,10 +8,12 @@ class Channel < ApplicationRecord
 
   before_validation :set_invitekey, if: -> { private? && invitekey.blank? }
 
+  has_many :members
+  has_many :users, through: :members
   has_many :messages
   private
 
   def set_invitekey
-    self.invitekey = SecureRandom.hex(10)
+    self.invitekey = "#" + SecureRandom.hex(9)
   end
 end

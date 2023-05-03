@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  # Sign in
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
@@ -9,6 +10,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # Sign out
   def destroy
     session.delete(:user_id)
     render json: { message: 'Logged out successfully' }

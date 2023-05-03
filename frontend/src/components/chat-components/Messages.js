@@ -52,7 +52,7 @@ const Messages = ({ channelId }) => {
         // !!! Need some work on handling created array
         received: data => {
           console.log(data.messages)
-          if (data.messages.length > 1 || data.messages.empty()) {
+          if (data.messages.length > 1 ) {
             // if the new array loaded from a start display it
             setMessages(data.messages);
           }
@@ -65,10 +65,11 @@ const Messages = ({ channelId }) => {
     );
     return () => channel.unsubscribe();
   }, [channelId]);
-  console.log("Messages: ", messages.length === 0)
+  console.log("Messages: ", messages[0])
   return(
     <div>
-      {messages.length > 0 && messages.map((message, index)=><p key={index}>{message.content}</p>)}
+      {messages.length !== 0 && messages.map((message, index)=><p key={index}>{message.content}</p>)}
+      {messages.length === 1 && <p>{messages[0].content}</p>}
     </div>
   );
 };

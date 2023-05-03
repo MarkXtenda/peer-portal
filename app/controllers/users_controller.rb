@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  # Create a user and Sign him in
     def create
       user = User.new(user_params)
       if user.save

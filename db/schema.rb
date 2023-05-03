@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_28_075047) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_03_065624) do
   create_table "channels", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -22,6 +22,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_075047) do
     t.index ["invitekey"], name: "index_channels_on_invitekey"
     t.index ["name"], name: "index_channels_on_name"
     t.index ["user_id"], name: "index_channels_on_user_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.integer "channel_id"
+    t.integer "user_id"
+    t.index ["channel_id"], name: "index_members_on_channel_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
