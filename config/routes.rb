@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   delete '/logout', to: 'sessions#destroy'
   resources :channels do
-    resources :messages, except: [:new, :edit]
+    resources :messages, only: [:index, :create]
   end
+  mount ActionCable.server => '/cable'
 end

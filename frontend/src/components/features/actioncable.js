@@ -1,9 +1,16 @@
 import ActionCable from 'actioncable';
 
-let cable;
+// let cable;
+
+const cableUrl = 'ws://localhost:3001/cable';
+const cable = ActionCable.createConsumer(cableUrl);
+
+export { cable };
 
 export function connect(channel, callbacks) {
-  cable = ActionCable.createConsumer('/cable');
+  const cableUrl = 'ws://localhost:3000/cable';
+  const cable = ActionCable.createConsumer(cableUrl);
+  // cable = ActionCable.createConsumer('/cable');
   cable.subscriptions.create({ channel: channel }, callbacks);
 }
 

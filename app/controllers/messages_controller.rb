@@ -4,15 +4,29 @@ class MessagesController < ApplicationController
   
   def create
     @channel = Channel.find(params[:channel_id])
-    @message = @channel.messages.new(message_params)
+    @message = @channel.messages.create(message_params)
     @message.user = current_user
     if @message.save
-
+      # channel_name = "messages_channel_#{params[:channel_id]}"
+      # channel_name = "messages_channel"
+      # Action cable to return a single message 
+      # ActionCable.server.broadcast "public_chat", {messages: @message}
+      ActionCable.server.broadcast "public_chat", {messages: @channel.messages}
       render json: @message
     else
       render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
+  # def create
+  #   user = User.find(1)
+  #   @channel = Channel.find(1)
+  #   message = @channel.messages.create(message_params)
+  #   if message.valid?   
+  #     ActionCable.server.broadcast 'public_chat', message.content
+  #     render json: message 
+  #   end
+  # end
 
   def index
     @channel = Channel.find(params[:channel_id])
@@ -23,6 +37,6 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:content, :channel_id, :message)
   end
 end

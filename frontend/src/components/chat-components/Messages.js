@@ -11,28 +11,66 @@
 
 // export default Messages
 
-import React, { useEffect, useState } from 'react';
-import { connect, disconnect } from '../features/actioncable';
+// import React, { useEffect, useState } from 'react';
+// import { connect, disconnect } from '../features/actioncable';
 
-function Messages(props) {
-  const [messages, setMessages] = useState([]);
+// function Messages(props) {
+//   const [messages, setMessages] = useState([]);
 
-  function handleReceivedMessage(data) {
-    setMessages([...messages, data.message]);
-  }
+//   function handleReceivedMessage(data) {
+//     setMessages([...messages, data.message]);
+//   }
+
+//   useEffect(() => {
+//     connect('Admin Channel', { received: handleReceivedMessage });
+//     return () => disconnect();
+//   }, []);
+
+//   return (
+//     <div>
+//       {messages.map((message) => (
+//         <div key={message.id}>{message.content}</div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default Messages;
+
+import React, { useState, useEffect } from 'react';
+import {cable} from '../features/actioncable';
+
+const Messages = ({ channelId }) => {
+  const [messages, setMessages] = useState(new Array());
 
   useEffect(() => {
-    connect('ChannelMessagesChannel', { received: handleReceivedMessage });
-    return () => disconnect();
-  }, []);
-
-  return (
+    const channel = cable.subscriptions.create(
+      { channel: "ChatChannel", channel_id: channelId.toString() },
+      {
+        connected: () => console.log('connected'),
+        disconnected: () => console.log('disconnected'),
+        // !!! Need some work on handling created array
+        received: data => {
+          console.log(data.messages)
+          if (data.messages.length > 1 || data.messages.empty()) {
+            // if the new array loaded from a start display it
+            setMessages(data.messages);
+          }
+          else {
+            // if message was created add it to array
+            setMessages(messages => [...messages, data.messages]);
+          }
+          }
+      }
+    );
+    return () => channel.unsubscribe();
+  }, [channelId]);
+  console.log("Messages: ", messages.length === 0)
+  return(
     <div>
-      {messages.map((message) => (
-        <div key={message.id}>{message.content}</div>
-      ))}
+      {messages.length > 0 && messages.map((message, index)=><p key={index}>{message.content}</p>)}
     </div>
   );
-}
+};
 
 export default Messages;

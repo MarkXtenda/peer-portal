@@ -5,6 +5,8 @@ import { store } from './app/store';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { ActionCableProvider } from 'react-actioncable-provider';
+import cable from './components/features/actioncable';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
@@ -12,11 +14,13 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
+    <ActionCableProvider url='ws://localhost:3001/cable'>
     <Provider store={store}>
       <BrowserRouter>
       <App />
       </BrowserRouter>
     </Provider>
+    </ActionCableProvider>
   </React.StrictMode>
 );
 
