@@ -1,20 +1,24 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { channelNameSelector } from '../features/channel/ChannelSelectors';
+import { channelChosenSelector } from '../features/channel/ChannelSelectors';
 import Messages from './Messages';
 import ChatBox from './ChatBox';
 
 function Content({handleSeeMenu}) {
-  const state = useSelector(channelNameSelector)
+  function handleMessageSent(e) {
+    e.preventDefault()
+    console.log("sent")
+  }
+  const state = useSelector(channelChosenSelector)
   return (
     <div className="col-md-9 content" onClick={()=>handleSeeMenu(false)}>
       <div className="background-image">
-        <h1>{state !== "default" ? state : "Select a group to start messaging"}</h1>
-        {state !== "default" && <Messages channelId = {1}/>}
+        <h1>{state !== "default" ? state.name : "Select a group to start messaging"}</h1>
+        {state !== "default" && <Messages/>}
         {/* {<ChatBox channelId={state}></ChatBox>} */}
       </div>
       <div style={{position: "fixed",bottom: "0px",left: "45%"}}>
-        <form onSubmit={(e)=>console.log("sent")}>
+        <form onSubmit={handleMessageSent}>
           <input></input>
           <button type="submit">send</button>
         </form>

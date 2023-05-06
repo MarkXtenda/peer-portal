@@ -39,13 +39,18 @@
 
 import React, { useState, useEffect } from 'react';
 import {cable} from '../features/actioncable';
+import { channelChosenSelector } from '../features/channel/ChannelSelectors';
+import { useSelector } from 'react-redux';
 
-const Messages = ({ channelId }) => {
+const Messages = () => {
   const [messages, setMessages] = useState(new Array());
+  const channelId = 1
+  const chosenChannelState = useSelector(channelChosenSelector)
+
   // ActionCable useEffect - realtime messaging data
   useEffect(() => {
     const channel = cable.subscriptions.create(
-      { channel: "ChatChannel", channel_id: channelId.toString() },
+      { channel: "ChatChannel", channel_id: chosenChannelState.id },
       {
         connected: () => console.log('connected'),
         disconnected: () => console.log('disconnected'),
@@ -57,13 +62,14 @@ const Messages = ({ channelId }) => {
           }
           else {
             // if message was created add it to array
-            setMessages(messages => [...messages, data.messages]);
+            setMessages(data.messages);
+            // setMessages(messages => [...messages, data.messages]);
           }
           }
       }
     );
     return () => channel.unsubscribe();
-  }, [channelId, messages]);
+  }, [chosenChannelState, messages]);
   console.log("Messages: ", messages)
   return(
     <div>

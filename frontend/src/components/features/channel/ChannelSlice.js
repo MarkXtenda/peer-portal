@@ -1,12 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchChannels } from '../fetchFunctions';
 
 const initialState = {
-  channelName: "default",
-  channels: ["Group 1", "Group 2", "Group 3"],
-  messages: [
-    {name: "Group 1", message: "Hello Group 1"},
-    {name: "Group 2", message: "Hello Group 2"},
-    {name: "Group 3", message: "Hello Group 3"}]
+  channelCurrent: "default",
+  channels: [],
 };
 
 export const chooseChannel = (channel) => {
@@ -16,19 +13,33 @@ export const chooseChannel = (channel) => {
   }
 }
 
-
 export default function channelReducer(state = initialState, action) {
     switch (action.type) {
-        case "channel/choose":
-          return { ...state, channelName: action.payload };
-        case "channel/search":
-          const searchedChannelsArray = state.channels.filter((channel)=>channel.name===action.payload)
-          return {...state, channels: searchedChannelsArray};
-        case "channel/add":
-          const addChannelArray = state.channels.push(action.payload)
-          return {...state, channels: addChannelArray}
-        default:
-          return state;
+      case "channel/load":
+        return { ...state, channels: action.payload}
+      case "channel/choose":
+        const choosenChannel = state.channels.find(element => element.name === action.payload)
+        return { ...state, channelCurrent: choosenChannel };
+      case "channel/search":
+        const searchedChannelsArray = state.channels.filter((channel)=>channel.name===action.payload)
+        return {...state, channels: searchedChannelsArray};
+      case "channel/add":
+        const addChannelArray = state.channels.push(action.payload)
+        return {...state, channels: addChannelArray}
+      case "channel/error":
+        return {...state, error: action.payload}  
+      default:
+        return state;
       }
-    
+}
+
+export function showChannels() {
+  return async function(dispatch) {
+    try {
+      const channels = await fetchChannels();
+      dispatch({ type: "channel/load", payload: channels });
+    } catch (err) {
+      dispatch({ type: "channel/error", payload: err });
+    }
+  };
 }

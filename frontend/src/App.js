@@ -15,7 +15,7 @@ import Channel from './components/features/channel/Channel';
 import {chooseChannel} from './components/features/channel/ChannelSlice'
 // rfce 
 function App() {
-  const userState = useSelector(userDataSelector)
+  const userDataState = useSelector(userDataSelector)
   const LoggedInState = useSelector(userIsLoggedInSelector)
   const state = useSelector((state)=>state)
   const ErrorFallback=({error,resetErrorBoundary})=>{

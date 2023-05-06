@@ -1,11 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchLogin } from '../fetchFunctions';
+import { fetchLogin, fetchLogout } from '../fetchFunctions';
 
 const initialStateUser = {
     isLoggedIn: false,
     user: null,
     error: null,
 };
+
+export const userLogout = (response) => {
+  return {
+    type: "user/logout",
+    payload: response
+  }
+}
 
 export default function userReducer(state = initialStateUser, action) {
     switch (action.type) {
@@ -30,10 +37,15 @@ export function loginUser(email, password) {
       }
     };
   }
-  
-  export const userLogout = (response) => {
-    return {
-      type: "user/logout",
-      payload: response
-    }
-}
+
+  export function logoutUser() {
+    return async function(dispatch) {
+      try {
+        const user = await fetchLogout();
+        dispatch({ type: "user/logout", payload: null });
+      } catch (err) {
+        dispatch({ type: "user/error", payload: err });
+      }
+    };
+  }
+
