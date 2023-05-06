@@ -1,10 +1,10 @@
 class MessagesController < ApplicationController
-  # before_action :authenticate_user!
-  
+  before_action :authenticate_user!
   def create
     @channel = Channel.find(params[:channel_id])
     @message = @channel.messages.create(message_params)
     @message.user = current_user
+    @message.username = current_user.username
     if @message.save
       # channel_name = "messages_channel_#{params[:channel_id]}"
       # channel_name = "messages_channel"

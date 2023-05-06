@@ -42,7 +42,7 @@ import {cable} from '../features/actioncable';
 
 const Messages = ({ channelId }) => {
   const [messages, setMessages] = useState(new Array());
-
+  // ActionCable useEffect - realtime messaging data
   useEffect(() => {
     const channel = cable.subscriptions.create(
       { channel: "ChatChannel", channel_id: channelId.toString() },
@@ -51,8 +51,7 @@ const Messages = ({ channelId }) => {
         disconnected: () => console.log('disconnected'),
         // !!! Need some work on handling created array
         received: data => {
-          console.log(data.messages)
-          if (data.messages.length > 1 ) {
+          if (data.messages.length >= 1 ) {
             // if the new array loaded from a start display it
             setMessages(data.messages);
           }
@@ -64,12 +63,11 @@ const Messages = ({ channelId }) => {
       }
     );
     return () => channel.unsubscribe();
-  }, [channelId]);
-  console.log("Messages: ", messages[0])
+  }, [channelId, messages]);
+  console.log("Messages: ", messages)
   return(
     <div>
-      {messages.length !== 0 && messages.map((message, index)=><p key={index}>{message.content}</p>)}
-      {messages.length === 1 && <p>{messages[0].content}</p>}
+      {messages.length !== 0 && messages.map((message, index)=><p key={index}>User: {message.creator} Message: {message.content}</p>)}
     </div>
   );
 };

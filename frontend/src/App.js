@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useEffect} from 'react';
+import React, {lazy, Suspense, useState, useEffect} from 'react';
 import logo from './logo.svg';
 import { Navigate, Route, Routes } from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary'
@@ -10,31 +10,34 @@ import UserPage from './components/chat-components/UserPage';
 import './App.css';
 import Signup from './components/login-signup-components/Signup';
 import { useSelector, useDispatch } from 'react-redux';
+import { userIsLoggedInSelector, userDataSelector } from './components/features/user/userSelector';
 import Channel from './components/features/channel/Channel';
 import {chooseChannel} from './components/features/channel/ChannelSlice'
 // rfce 
 function App() {
-  const user = true
-  const state = useSelector((state)=>state.channel)
-
+  const userState = useSelector(userDataSelector)
+  const LoggedInState = useSelector(userIsLoggedInSelector)
+  const state = useSelector((state)=>state)
   const ErrorFallback=({error,resetErrorBoundary})=>{
     return (<>
         <img src='https://i.imgur.com/lKJiT77.png'/>
         <h1>Sorry this page is broken</h1>
+        <h2>{error}</h2>
         <button onClick={resetErrorBoundary}>Try again</button>
     </>)
   }
+  if (!LoggedInState) return(<Login/>);
   return (
     <div className="App">
       <main>
-        {!user && <Navigate to='/login'/>}
-        {user && <Navigate from="/" to="/channels" />}
+        {/* {!user && <Navigate to='/login'/>} */}
+        {/* {user && <Navigate from="/" to="/channels" />} */}
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/channels" element={<UserPage/>}>
+            <Route path="/" element={<UserPage/>}>
               <Route path="@me" element={<Homepage />}/>
               <Route path=":serverId" element={
                 <Sidebar>
