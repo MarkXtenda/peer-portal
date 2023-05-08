@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import Content from './Content';
 import Menu from './Menu';
 import { useState } from 'react';
+import Settings from './Settings';
 import './UserPage.css';
 
 function ChannelComponent() {
@@ -16,6 +17,7 @@ function ChannelComponent() {
         <Sidebar hide={seeMenu} handleSeeMenu={setSeeMenu}/>
         <Content handleSeeMenu={setSeeMenu}/>
       </div>
+      <Settings/>
     </div>
   );
 }

@@ -8,5 +8,6 @@ class User < ApplicationRecord
     has_many :members
     has_many :channels, through: :members
     has_many :messages
+    has_one :avatar
 end
   

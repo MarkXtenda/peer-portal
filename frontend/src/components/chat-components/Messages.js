@@ -1,42 +1,3 @@
-// import React from 'react'
-// import { messagesMessageSelector } from '../features/message/MessageSelectors'
-// import { useSelector } from 'react-redux'
-
-// function Messages({messageSource}) {
-//     const messageState = useSelector(messagesMessageSelector)
-//   return (
-//     <div>{messageState.find((message)=>message.name === messageSource).message}</div>
-//   )
-// }
-
-// export default Messages
-
-// import React, { useEffect, useState } from 'react';
-// import { connect, disconnect } from '../features/actioncable';
-
-// function Messages(props) {
-//   const [messages, setMessages] = useState([]);
-
-//   function handleReceivedMessage(data) {
-//     setMessages([...messages, data.message]);
-//   }
-
-//   useEffect(() => {
-//     connect('Admin Channel', { received: handleReceivedMessage });
-//     return () => disconnect();
-//   }, []);
-
-//   return (
-//     <div>
-//       {messages.map((message) => (
-//         <div key={message.id}>{message.content}</div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default Messages;
-
 import React, { useState, useEffect } from 'react';
 import {cable} from '../features/actioncable';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
@@ -44,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const Messages = () => {
   const [messages, setMessages] = useState(new Array());
-  const channelId = 1
   const chosenChannelState = useSelector(channelChosenSelector)
 
   // ActionCable useEffect - realtime messaging data

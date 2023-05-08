@@ -19,14 +19,19 @@ function App() {
   const LoggedInState = useSelector(userIsLoggedInSelector)
   const state = useSelector((state)=>state)
   const ErrorFallback=({error,resetErrorBoundary})=>{
+    console.log(error)
     return (<>
         <img src='https://i.imgur.com/lKJiT77.png'/>
         <h1>Sorry this page is broken</h1>
-        <h2>{error}</h2>
+        
         <button onClick={resetErrorBoundary}>Try again</button>
     </>)
   }
-  if (!LoggedInState) return(<Login/>);
+  if (!LoggedInState) {
+    // if location is signup return Signup component
+    // else
+    return(<Login/>);
+  }
   return (
     <div className="App">
       <main>

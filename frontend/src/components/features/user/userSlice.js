@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchLogin, fetchLogout } from '../fetchFunctions';
 
 const initialStateUser = {
@@ -41,7 +40,7 @@ export function loginUser(email, password) {
   export function logoutUser() {
     return async function(dispatch) {
       try {
-        const user = await fetchLogout();
+        await fetchLogout();
         dispatch({ type: "user/logout", payload: null });
       } catch (err) {
         dispatch({ type: "user/error", payload: err });

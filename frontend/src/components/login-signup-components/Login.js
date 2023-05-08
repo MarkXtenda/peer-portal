@@ -12,14 +12,17 @@ function Login() {
   const [errors, setErrors] = useState([])
   const navigate = useNavigate();
 
-  function HandleSubmit(e) {
+  function handleSignupRoute(e) {
+    e.preventDefault()
+  }
+  function handleLoginSubmit(e) {
     e.preventDefault()
     dispatch(loginUser(email, password))
     navigate("/", { replace: true })
   }
   return (
     <main className="container-fluid bg d-flex justify-content-center align-items-center">
-      <form className="card" onSubmit={HandleSubmit}>
+      <form className="card" onSubmit={handleLoginSubmit}>
         <header className="card-header">
           <h4 className="card-title">Sign in to your account</h4>
         </header>
@@ -40,7 +43,7 @@ function Login() {
         </div>
         <footer className="card-footer">
           <p className="mb-0">Don't have an account? 
-          <a href="/discord-clone/signup" className="card-link">Sign up</a>
+          <a href="/signup" className="card-link" onClick={handleSignupRoute}>Sign up</a>
           </p>
         </footer>
       </form>

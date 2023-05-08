@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchChannels } from '../fetchFunctions';
 
 const initialState = {

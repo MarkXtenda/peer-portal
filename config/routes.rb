@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   delete '/logout', to: 'sessions#destroy'
   post '/search', to: 'channels#find_channel'
+  post '/avatars', to: 'avatars#create'
+  # testing
+  get '/avatars', to: 'avatars#show'
+  get '/users', to: 'users#show'
   resources :channels do
     resources :messages, only: [:index, :create]
   end

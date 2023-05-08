@@ -1,11 +1,12 @@
 import React from 'react'
 import { logoutUser } from '../features/user/userSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function Menu() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+
   function handleLogout(e) {
     e.preventDefault();
     dispatch(logoutUser())
@@ -16,7 +17,7 @@ function Menu() {
           <div className="sidebar-header d-flex">
                 <h1>User</h1>
           </div>
-          <ul className="list-unstyled">
+          <ul className="list-ustyled">
             <li><a href="#">Create New Group</a></li>
             <li><a href="#">Create New Channel</a></li>
             <li><a href="#">Settings</a></li>
