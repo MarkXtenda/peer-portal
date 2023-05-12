@@ -63,4 +63,22 @@ export function fetchLogout() {
       throw error;
     });
 }
+
+export function fetchAvatar(formData) {
+  return fetch("/avatars", {
+    method: "POST",
+    body: formData
+  })
+  .then((r) => {
+    if (r.ok) {
+      return r.json();
+    } else {
+      throw new Error("Unable to load avatar");
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    throw error;
+  });
+}
   

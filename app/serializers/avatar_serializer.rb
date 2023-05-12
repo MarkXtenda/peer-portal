@@ -1,6 +1,6 @@
 class AvatarSerializer < ActiveModel::Serializer
   # attributes :url
-  attributes :id, :url
+  attributes :url
   include Rails.application.routes.url_helpers
 
   # def url

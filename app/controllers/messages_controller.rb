@@ -2,9 +2,9 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
   def create
     @channel = Channel.find(params[:channel_id])
-    @message = @channel.messages.create(message_params)
+    @message = @channel.messages.new(message_params)
     @message.user = current_user
-    @message.username = current_user.username
+    @message.creator = current_user.username
     if @message.save
       # channel_name = "messages_channel_#{params[:channel_id]}"
       # channel_name = "messages_channel"
@@ -35,6 +35,6 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content, :channel_id, :message)
+    params.require(:message).permit(:content, :channel_id, :user_id, :creator)
   end
 end

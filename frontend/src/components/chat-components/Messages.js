@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {cable} from '../features/actioncable';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
 import { useSelector } from 'react-redux';
+import './Messages.css';
 
 const Messages = () => {
+  const DEFAULT_AVATAR_URL = 'https://i.imgur.com/6VBx3io.png';
   const [messages, setMessages] = useState(new Array());
   const chosenChannelState = useSelector(channelChosenSelector)
 
@@ -32,9 +34,28 @@ const Messages = () => {
   }, [chosenChannelState, messages]);
   console.log("Messages: ", messages)
   return(
-    <div>
-      {messages.length !== 0 && messages.map((message, index)=><p key={index}>User: {message.creator} Message: {message.content}</p>)}
-    </div>
+    // <div>
+    //   {messages.length !== 0 && messages.map((message, index)=><p key={index}>User: {message.creator} Message: {message.content}</p>)}
+    // </div>
+    <div className="message-list">
+    {messages.length !== 0 &&
+      messages.map((message, index) => (
+        <div key={index} className="message-container">
+          <img
+            className="avatar"
+            src={message.avatar || DEFAULT_AVATAR_URL}
+            alt="Avatar"
+          />
+          <div className="message">
+            <div className="header">
+              <span className="username">{message.creator}</span>
+              <span className="timestamp">{message.created_at}</span>
+            </div>
+            <div className="content">{message.content}</div>
+          </div>
+        </div>
+      ))}
+  </div>
   );
 };
 

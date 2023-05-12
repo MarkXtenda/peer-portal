@@ -3,10 +3,13 @@ import logo from "./logo.svg"
 import "./Settings.css"
 import { useSelector } from "react-redux";
 import { userAvatarSelector } from "../features/user/userSelector";
+import { changeAvatarUser } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
-function Settings() {
+function Settings({setIsVisible}) {
     const userAvatar = useSelector(userAvatarSelector)
     const [avatar, setAvatar] = useState(userAvatar)
+    const dispatch = useDispatch()
     const config = {     
         headers: { 'content-type': 'multipart/form-data' }
     }
@@ -14,17 +17,11 @@ function Settings() {
         e.preventDefault()
         const formData = new FormData()
         formData.append("avatar", avatar)
-        fetch("/avatars", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json()).then(data=>console.log(data))
-        .catch(error => {
-            console.log(error);
-        });
+        dispatch(changeAvatarUser(formData))    
     }
     return(
         <div id="settings">
+            <div onClick={()=>setIsVisible(false)}>X</div>
             <form onSubmit={handleSubmit}>
             {avatar && (
             <img
