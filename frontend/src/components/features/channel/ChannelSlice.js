@@ -1,8 +1,10 @@
-import { fetchChannels } from '../fetchFunctions';
+import { dispatch } from '../constants';
+import { fetchChannels, fetchChannelSearch } from '../fetchFunctions';
 
 const initialState = {
   channelCurrent: "default",
   channels: [],
+  searchedChannels: []
 };
 
 export const chooseChannel = (channel) => {
@@ -20,8 +22,9 @@ export default function channelReducer(state = initialState, action) {
         const choosenChannel = state.channels.find(element => element.name === action.payload)
         return { ...state, channelCurrent: choosenChannel };
       case "channel/search":
-        const searchedChannelsArray = state.channels.filter((channel)=>channel.name===action.payload)
-        return {...state, channels: searchedChannelsArray};
+        return {...state, searchedChannels: action.payload};
+      case "channel/clear":
+        return {...state, searchedChannels: action.payload}
       case "channel/add":
         const addChannelArray = state.channels.push(action.payload)
         return {...state, channels: addChannelArray}
@@ -41,4 +44,20 @@ export function showChannels() {
       dispatch({ type: "channel/error", payload: err });
     }
   };
+}
+
+export function searchChanels(name) {
+  return async function(dispatch) {
+    try {
+      const searchResult = await fetchChannelSearch(name);
+      dispatch({ type: "channel/search", payload: searchResult});
+    } catch (err) {
+      dispatch({type: "channel/error", payload: err})
+    }
+  }
+}
+export function clearSearch() {
+  return function(dispatch) {
+  dispatch({type: "channel/clear", payload: []})
+  }
 }

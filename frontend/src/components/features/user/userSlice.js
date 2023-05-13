@@ -1,4 +1,4 @@
-import { fetchLogin, fetchLogout, fetchAvatar } from '../fetchFunctions';
+import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage} from '../fetchFunctions';
 
 const initialStateUser = {
     isLoggedIn: false,
@@ -52,27 +52,42 @@ export function loginUser(email, password) {
     };
   }
 
-  export function logoutUser() {
-    return async function(dispatch) {
-      try {
-        await fetchLogout();
-        dispatch({ type: "user/logout", payload: null });
-      } catch (err) {
-        dispatch({ type: "user/error", payload: err });
-      }
-    };
-  }
-
-  export function changeAvatarUser(formData) {
-    return async function(dispatch) {
-      try {
-        const avatar = await fetchAvatar(formData);
-        dispatch({ type: "user/avatar", payload: avatar});
-      } catch (err) {
-        dispatch({type: "user/error", payload: err})
-      }
-      }
+export function logoutUser() {
+  return async function(dispatch) {
+    try {
+      await fetchLogout();
+      dispatch({ type: "user/logout", payload: null });
+    } catch (err) {
+      dispatch({ type: "user/error", payload: err });
     }
+  };
+}
+
+export function changeAvatarUser(formData) {
+  return async function(dispatch) {
+    try {
+      const avatar = await fetchAvatar(formData);
+      dispatch({ type: "user/avatar", payload: avatar});
+    } catch (err) {
+      dispatch({type: "user/error", payload: err})
+    }
+  }
+}
+
+export function sendMessage(channelId, messageData) {
+  return async function() {
+    try {
+      console.log("sending message...", channelId, messageData);
+      await fetchSendMessage(channelId, messageData);
+      console.log("message sent successfully");
+    }
+    catch (err) {
+      console.log(err)
+    }
+    
+  }
+}
+
 
   
 

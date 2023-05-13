@@ -6,9 +6,11 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   post '/search', to: 'channels#find_channel'
   post '/avatars', to: 'avatars#create'
+  post '/find_channel', to: 'channels#find_channel'
   # testing
   get '/avatars', to: 'avatars#show'
   get '/users', to: 'users#show'
+  get '/messages', to: 'messages#index'
   resources :channels do
     resources :messages, only: [:index, :create]
   end

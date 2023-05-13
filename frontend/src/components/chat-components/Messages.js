@@ -3,9 +3,9 @@ import {cable} from '../features/actioncable';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
 import { useSelector } from 'react-redux';
 import './Messages.css';
+import {DEFAULT_AVATAR_URL} from '../features/constants'
 
 const Messages = () => {
-  const DEFAULT_AVATAR_URL = 'https://i.imgur.com/6VBx3io.png';
   const [messages, setMessages] = useState(new Array());
   const chosenChannelState = useSelector(channelChosenSelector)
 
@@ -18,32 +18,31 @@ const Messages = () => {
         disconnected: () => console.log('disconnected'),
         // !!! Need some work on handling created array
         received: data => {
-          if (data.messages.length >= 1 ) {
-            // if the new array loaded from a start display it
-            setMessages(data.messages);
+          console.log(data)
+          if (data) {
+            if (data.messages.length === 0 || data.messages.length >= 1) {
+              // if the new array loaded from a start display it
+              setMessages(data.messages);
+            }
+            else {
+              // if message was created add it to array
+              setMessages(messages => [...messages, ...data.messages]);
+            }
           }
-          else {
-            // if message was created add it to array
-            setMessages(data.messages);
-            // setMessages(messages => [...messages, data.messages]);
-          }
-          }
+        }
       }
     );
     return () => channel.unsubscribe();
-  }, [chosenChannelState, messages]);
-  console.log("Messages: ", messages)
+  }, [chosenChannelState, setMessages, messages]);
+  console.log(messages)
   return(
-    // <div>
-    //   {messages.length !== 0 && messages.map((message, index)=><p key={index}>User: {message.creator} Message: {message.content}</p>)}
-    // </div>
     <div className="message-list">
     {messages.length !== 0 &&
       messages.map((message, index) => (
         <div key={index} className="message-container">
           <img
             className="avatar"
-            src={message.avatar || DEFAULT_AVATAR_URL}
+            src={message.url || DEFAULT_AVATAR_URL}
             alt="Avatar"
           />
           <div className="message">

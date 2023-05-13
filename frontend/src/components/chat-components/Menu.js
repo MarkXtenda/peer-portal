@@ -3,10 +3,12 @@ import { logoutUser } from '../features/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Settings from './Settings';
+import { userDataSelector } from '../features/user/userSelector';
 
 function Menu() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const userData = useSelector(userDataSelector)
   const [isVisible, setIsVisible] = useState(false)
 
   function handleLogout(e) {
@@ -17,7 +19,7 @@ function Menu() {
   return (
     <div className="col-md-3 sidebar">
           <div className="sidebar-header d-flex">
-                <h1>User</h1>
+                <h1>{userData.username}</h1>
           </div>
           <ul className="list-ustyled">
             <li><a href="#">Create New Group</a></li>

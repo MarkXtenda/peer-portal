@@ -4,5 +4,5 @@ class ChannelSerializer < ActiveModel::Serializer
   # NO CURRENT NEED IN SHOWING USERS MESSAGES
   # has_many :messages, serializer: MessageSerializer
   # SHOW USERS INSTEAD
-  has_many :users, serializer: UserSerializer
+  # has_many :users, serializer: UserSerializer, only: [:username]
 end

@@ -81,4 +81,45 @@ export function fetchAvatar(formData) {
     throw error;
   });
 }
+
+export function fetchSendMessage(channelId, messageData) {
+  return fetch(`/channels/${channelId}/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(messageData)
+  })
+  .then((r) => {
+    if (r.ok) {
+      return console.log("sent succesfully");
+    } else {
+      throw new Error("Unable to send a message");
+    }
+  })
+  .catch((error) => {
+    throw error;
+  });
+}
+
+export function fetchChannelSearch(name) {
+  return fetch(`/find_channel`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(name[0] === "#" ? {"invitekey": name} : {"name": name})
+  })
+  .then((r) => {
+    if (r.ok) {
+      return r.json();
+    } else {
+      throw new Error("Unable to search channels");
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    throw error;
+  });
+}
   

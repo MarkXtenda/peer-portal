@@ -5,7 +5,7 @@ class AvatarsController < ApplicationController
             avatar.destroy
         end
         new_avatar = Avatar.new(avatar_params)
-        new_avatar.user_id = current_user.id
+        # new_avatar.user_id = current_user.id
         if new_avatar.save
             render json: new_avatar, status: :created
         else

@@ -16,9 +16,10 @@ class ChannelsController < ApplicationController
   # !!! need appropriate route
   def find_channel
     if (params[:invitekey])
-      @channels = Channel.find_by(invitekey: params[:invitekey], private: true)
+      @channels = Channel.where(invitekey: params[:invitekey])
     else
-      @channels = Channel.find_by(name: params[:name], private: false)
+      public_channels = Channel.where(private: false)
+      @channels = public_channels.select {|channel| channel.name.include?(params[:name])}
     end
     render json: @channels
   end

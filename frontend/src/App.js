@@ -27,6 +27,7 @@ function App() {
         <button onClick={resetErrorBoundary}>Try again</button>
     </>)
   }
+  
   if (!LoggedInState) {
     // if location is signup return Signup component
     // else
@@ -44,11 +45,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<UserPage/>}>
               <Route path="@me" element={<Homepage />}/>
-              <Route path=":serverId" element={
-                <Sidebar>
-                  <Channels />
-                </Sidebar>
-              } />
             </Route>
           </Routes>
           </Suspense>

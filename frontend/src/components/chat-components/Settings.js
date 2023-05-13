@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import logo from "./logo.svg"
 import "./Settings.css"
 import { useSelector } from "react-redux";
-import { userAvatarSelector } from "../features/user/userSelector";
+import { userDataSelector } from "../features/user/userSelector";
 import { changeAvatarUser } from "../features/user/userSlice";
 import { useDispatch } from "react-redux";
+import { DEFAULT_AVATAR_URL } from "../features/constants";
 
 function Settings({setIsVisible}) {
-    const userAvatar = useSelector(userAvatarSelector)
-    const [avatar, setAvatar] = useState(userAvatar)
+    const userData = useSelector(userDataSelector)
+    const [avatar, setAvatar] = useState("")
     const dispatch = useDispatch()
     const config = {     
         headers: { 'content-type': 'multipart/form-data' }
@@ -17,19 +17,19 @@ function Settings({setIsVisible}) {
         e.preventDefault()
         const formData = new FormData()
         formData.append("avatar", avatar)
+        formData.append("user_id", userData.id)
         dispatch(changeAvatarUser(formData))    
     }
     return(
         <div id="settings">
             <div onClick={()=>setIsVisible(false)}>X</div>
             <form onSubmit={handleSubmit}>
-            {avatar && (
+                
             <img
             className="img-avatar"
-            src={userAvatar}
+            src={userData.avatar ? userData.avatar.url : DEFAULT_AVATAR_URL}
             alt="user avatar"
             />
-            )}
             <label>Profile Image</label>
             <input
             type="file"
