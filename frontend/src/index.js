@@ -5,8 +5,6 @@ import { store } from './app/store';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { ActionCableProvider } from 'react-actioncable-provider';
-import {cable} from './components/features/actioncable';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 

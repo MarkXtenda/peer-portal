@@ -15,7 +15,7 @@ class MembersController < ApplicationController
             membership.destroy
             render json: { message: 'Left the group succesfully' }
         else
-            render json: { error: "Already a non-member" }, status: :unprocessable_entity
+            render json: { error: "A non-member" }, status: :unprocessable_entity
         end
     end
 

@@ -7,9 +7,10 @@ function Channels() {
   const state = useSelector(channelSelector)
   const dispatch = useDispatch()
 
-  function handleChannelClick(e) {
+  function handleChannelClick(e, channel) {
     e.preventDefault()
-    dispatch(chooseChannel(e.target.name))
+    dispatch(chooseChannel(channel))
+    console.log(channel)
   }
   useEffect(()=>{
     dispatch(showChannels())
@@ -18,7 +19,7 @@ function Channels() {
     <div className="sidebar-body">
             <ul className="list-unstyled">
               {state.length !== 0 && state.map((channel, index)=>
-              <li key={index}><a key={index+1} name={channel.name} href='#' onClick={(e)=>handleChannelClick(e)}>{channel.name}</a></li>
+              <li key={index}><a key={index+1} name={channel.name} href='#' onClick={(e)=>handleChannelClick(e, channel)}>{channel.name}</a></li>
               )}
             </ul>
           </div>

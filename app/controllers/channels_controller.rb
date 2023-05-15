@@ -29,8 +29,12 @@ class ChannelsController < ApplicationController
     @channel = Channel.new(channel_params)
     @channel.user_id = current_user.id
     # Note: Do you need to be a member of created group?
+    # Answer: Yes!
     if @channel.save
-      render json: @channel, status: :created
+      assigning_user_to_channel = Member.new(user_id: current_user.id, channel_id: @channel.id)
+      if assigning_user_to_channel.save
+        render json: @channel, status: :created
+      end
     else
       render json: @channel.errors, status: :unprocessable_entity
     end
@@ -38,16 +42,22 @@ class ChannelsController < ApplicationController
 
   # Channel update
   def update
-    if @channel.update(channel_params)
+    # channel = Channel.find(params[:id])
+    if @channel.user_id === current_user.id && @channel.update(name: params[:name], description: params[:description], image: params[:image])
       render json: @channel
     else
       render json: @channel.errors, status: :unprocessable_entity
     end
   end
 
+  # Delete channel
   def destroy
-    @channel.destroy
-    head :no_content
+    if @channel.user_id === current_user.id 
+      @channel.destroy
+      head :no_content
+    else
+      render json: {"error": "User is not a creator user"}
+    end
   end
 
   private
@@ -57,6 +67,6 @@ class ChannelsController < ApplicationController
   end
 
   def channel_params
-    params.require(:channel).permit(:name, :description, :private, :invitekey)
+    params.require(:channel).permit(:name, :description, :private, :invitekey, :image)
   end
 end

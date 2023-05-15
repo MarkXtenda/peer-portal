@@ -3,16 +3,11 @@ import logo from './logo.svg';
 import { Navigate, Route, Routes } from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary'
 import Login from './components/login-signup-components/Login';
-import Homepage from './components/Homepage';
-import Sidebar from './components/chat-components/Sidebar';
-import Channels from './components/chat-components/Channels';
 import UserPage from './components/chat-components/UserPage';
 import './App.css';
 import Signup from './components/login-signup-components/Signup';
 import { useSelector, useDispatch } from 'react-redux';
 import { userIsLoggedInSelector, userDataSelector } from './components/features/user/userSelector';
-import Channel from './components/features/channel/Channel';
-import {chooseChannel} from './components/features/channel/ChannelSlice'
 // rfce 
 function App() {
   const userDataState = useSelector(userDataSelector)
@@ -44,7 +39,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<UserPage/>}>
-              <Route path="@me" element={<Homepage />}/>
+              {/* <Route path="@me" element={<Homepage />}/> */}
             </Route>
           </Routes>
           </Suspense>

@@ -67,6 +67,7 @@ export function fetchLogout() {
 export function fetchAvatar(formData) {
   return fetch("/avatars", {
     method: "POST",
+    // headers: { 'content-type': 'multipart/form-data' },
     body: formData
   })
   .then((r) => {
@@ -123,3 +124,42 @@ export function fetchChannelSearch(name) {
   });
 }
   
+export function fetchDeleteChannel(channelId) {
+  const id = channelId
+  return fetch(`/channels/${channelId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((r) => {
+      if (r.ok) {
+        return id;
+      } else {
+        throw new Error("Unable to delete the channel");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
+export function fetchUpdateChannel(channelId, channelData) {
+  console.log(channelData)
+  return fetch(`/channels/${channelId}`, {
+    method: "PATCH",
+    body: channelData
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Unable to update the channel");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
