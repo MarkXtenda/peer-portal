@@ -6,12 +6,16 @@ import Messages from './Messages';
 import { userDataSelector } from '../features/user/userSelector';
 import { settingsHideMenuAction } from '../features/settings/SettingsSlice';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
+import RemoveUser from './side-windows/RemoveUser';
 
 function Content() {
   const chosenChannelState = useSelector(channelChosenSelector)
   const userState = useSelector(userDataSelector)
   const [content, setContent] = useState("")
   const dispatch = useDispatch()
+  function handleRemoveUser() {
+    return(<RemoveUser/>);
+  }
   function handleMessageSent(e) {
     e.preventDefault();
     console.log('handleMessageSent called');
@@ -32,7 +36,8 @@ function Content() {
           <h1>{chosenChannelState !== "default" ? chosenChannelState.name : "Select a group to start messaging"}</h1>
           {chosenChannelState !== "default" && 
           <div>
-            <p>Users: {chosenChannelState.users}</p>
+            <a href='#' onClick={handleRemoveUser}>Users: {chosenChannelState.users}</a>
+            <RemoveUser/>
             {chosenChannelState.creator_id === userState.id 
             ? 
             <div>

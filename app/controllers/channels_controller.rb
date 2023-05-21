@@ -1,5 +1,5 @@
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show, :update, :destroy]
+  before_action :set_channel, only: [:show, :index, :find_channel, :update, :destroy]
   # before_action :authenticate_user
 
   # Shows all channel that user subscribed to
@@ -7,9 +7,9 @@ class ChannelsController < ApplicationController
     @channels = current_user.channels
     render json: @channels
   end
-  # Render chosen Channel
+  # Render chosen Channel and show it users
   def show
-    render json: @channel
+    render json: @channel.users, only: [:id, :username, :avatar]
   end
 
   # Search function for channels. Either public or private
@@ -26,7 +26,7 @@ class ChannelsController < ApplicationController
 
   # Create channel
   def create
-    @channel = Channel.new(channel_params)
+    @channel = Channel.new(create_channel_params)
     @channel.user_id = current_user.id
     # Note: Do you need to be a member of created group?
     # Answer: Yes!
@@ -63,10 +63,17 @@ class ChannelsController < ApplicationController
   private
 
   def set_channel
-    @channel = Channel.find(params[:id])
+    if params[:id]
+      @channel = Channel.find(params[:id])
+    else 
+      @channel = nil
+    end
   end
 
   def channel_params
     params.require(:channel).permit(:name, :description, :private, :invitekey, :image)
+  end
+  def create_channel_params
+    params.permit(:name, :description, :private, :invitekey, :image)
   end
 end

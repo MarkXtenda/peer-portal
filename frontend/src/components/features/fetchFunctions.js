@@ -163,3 +163,46 @@ export function fetchUpdateChannel(channelId, channelData) {
       throw error;
     });
 }
+
+export function fetchCreateChannel(channelData) {
+  return fetch("/channels", {
+    method: "POST",
+    body: channelData,
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Unable to create the channel");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
+export function fetchRemoveUser(userId, channelId) {
+  return fetch(`/members/${userId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      channel_id: channelId
+    })
+  })
+    .then((r) => {
+      if (r.ok) {
+        return r.json();
+      } else {
+        throw new Error("Unable to remove the user");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+

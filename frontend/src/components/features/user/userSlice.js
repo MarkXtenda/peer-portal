@@ -1,4 +1,5 @@
-import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage} from '../fetchFunctions';
+import { chooseChannel } from '../channel/ChannelSlice';
+import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser} from '../fetchFunctions';
 
 const initialStateUser = {
     isLoggedIn: false,
@@ -57,6 +58,7 @@ export function logoutUser() {
     try {
       await fetchLogout();
       dispatch({ type: "user/logout", payload: null });
+      dispatch(chooseChannel("default"))
     } catch (err) {
       dispatch({ type: "user/error", payload: err });
     }
@@ -86,6 +88,17 @@ export function sendMessage(channelId, messageData) {
     }
     
   }
+}
+
+export function removeUser(userId, channelId) {
+  return async function(dispatch) {
+    try {
+      await fetchRemoveUser(userId, channelId);
+      // Dispatch any necessary actions after the user is removed
+    } catch (err) {
+      dispatch({ type: "user/error", payload: err });
+    }
+  };
 }
 
 

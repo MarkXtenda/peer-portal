@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+  }
+  #some-div {
+    position: relative;
+    left: 250px;
+    top: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 300px;
+  }
+  #all-users {
+    display: flex;
+    flex-direction: column;
+  }
+  .remove-btn {
+  }

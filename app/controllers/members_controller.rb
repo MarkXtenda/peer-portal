@@ -2,8 +2,9 @@ class MembersController < ApplicationController
     def create
         membership = Member.find_by(member_params)
         if !membership
+            user = member.user.username
             membership = Member.create(member_params)
-            render json: { message: 'Joined the group succesfully' }
+            render json: { user: user, message: 'Joined the group' }
         else
             render json: { error: "Already a member" }, status: :unprocessable_entity
         end
@@ -12,8 +13,9 @@ class MembersController < ApplicationController
     def destroy
         membership = Member.find_by(member_params)
         if membership
+            user = member.user.username
             membership.destroy
-            render json: { message: 'Left the group succesfully' }
+            render json: { user: user, message: 'Left the group' }
         else
             render json: { error: "A non-member" }, status: :unprocessable_entity
         end

@@ -1,4 +1,5 @@
-import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel } from '../fetchFunctions';
+import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel } from '../fetchFunctions';
+import { settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialState = {
   channelCurrent: "default",
@@ -28,8 +29,7 @@ export default function channelReducer(state = initialState, action) {
       case "channel/clear":
         return {...state, searchedChannels: action.payload}
       case "channel/add":
-        const addChannelArray = state.channels.push(action.payload)
-        return {...state, channels: addChannelArray}
+        return { ...state, channels: [...state.channels, action.payload]}
       case "channel/delete":
         const updatedChannels = state.channels.filter(channel => channel.id !== action.payload);
         return { ...state, channels: updatedChannels };
@@ -94,9 +94,25 @@ export const updateChannel = (channelId, channelData) => {
       const updatedChannel = await fetchUpdateChannel(channelId, channelData);
       dispatch({ type: "channel/update", payload: updatedChannel });
       dispatch(chooseChannel(updatedChannel))
+      dispatch(settingsTogleAction("default"))
     } catch (err) {
       console.log(err)
       // dispatch({ type: "channel/error", payload: err });
     }
   };
 };
+
+
+export function addChannel(channelData) {
+  return async function(dispatch) {
+    try {
+      const createdChannel = await fetchCreateChannel(channelData);
+      dispatch({ type: "channel/add", payload: createdChannel });
+      dispatch(chooseChannel(createdChannel))
+      dispatch(settingsTogleAction("default"))
+      // Optionally, you can dispatch chooseChannel(createdChannel) to select the newly created channel
+    } catch (err) {
+      dispatch({ type: "channel/error", payload: err });
+    }
+  };
+}
