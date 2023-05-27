@@ -10,15 +10,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userIsLoggedInSelector, userDataSelector } from './components/features/user/userSelector';
 // rfce 
 function App() {
+  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
   const userDataState = useSelector(userDataSelector)
   const LoggedInState = useSelector(userIsLoggedInSelector)
   const state = useSelector((state)=>state)
+
+  useEffect(() => {
+    setIsLoading(true)
+    // auto-login
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          dispatch({ type: "user/login", payload: user });
+        });
+          setIsLoading(false)
+      }
+      else {
+        setIsLoading(false)
+      }
+    });
+  }, []);
+
   const ErrorFallback=({error,resetErrorBoundary})=>{
     console.log(error)
     return (<>
         <img src='https://i.imgur.com/lKJiT77.png'/>
-        <h1>Sorry this page is broken</h1>
-        
+        <h1>Sorry this page is broken</h1>   
         <button onClick={resetErrorBoundary}>Try again</button>
     </>)
   }

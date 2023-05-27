@@ -1,5 +1,5 @@
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show, :index, :find_channel, :update, :destroy]
+  before_action :set_channel, only: [:show, :index, :find_channel, :chosen_channel, :update, :destroy]
   # before_action :authenticate_user
 
   # Shows all channel that user subscribed to
@@ -7,13 +7,17 @@ class ChannelsController < ApplicationController
     @channels = current_user.channels
     render json: @channels
   end
-  # Render chosen Channel and show it users
+  # Render chosen Channel
   def show
-    render json: @channel.users, only: [:id, :username, :avatar]
+    render json: @channel
   end
 
+  # currently unused?
+  # def channel_users
+  #   render json: @channel.users, only: [:id, :username, :avatar]
+  # end
+
   # Search function for channels. Either public or private
-  # !!! need appropriate route
   def find_channel
     if (params[:invitekey])
       @channels = Channel.where(invitekey: params[:invitekey])

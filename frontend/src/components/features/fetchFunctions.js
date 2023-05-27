@@ -206,3 +206,46 @@ export function fetchRemoveUser(userId, channelId) {
     });
 }
 
+export function fetchJoinChannel(userId, channelId) {
+  return fetch(`/members`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      channel_id: channelId
+    })
+  })
+    .then((r) => {
+      if (r.ok) {
+        return r.json();
+      } else {
+        throw new Error("Unable to add the user");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
+export function fetchOneChannel(channelId) {
+  return fetch(`/channels/${channelId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((r) => {
+      if (r.ok) {
+        return r.json();
+      } else {
+        throw new Error("Unable to load Channels");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}

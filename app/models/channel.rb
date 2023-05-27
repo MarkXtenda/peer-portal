@@ -7,7 +7,7 @@ class Channel < ApplicationRecord
   validates :description, presence: true
   validates :invitekey, uniqueness: true, allow_nil: true
 
-  before_validation :set_invitekey, if: -> { private? && invitekey.empty? }
+  before_validation :set_invitekey, if: -> { private? && invitekey.to_s.empty? }
 
   has_many :members, dependent: :destroy
   has_many :users, through: :members

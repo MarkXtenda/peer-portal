@@ -8,6 +8,7 @@ import { settingsSeeMenuSelector, settingsTogleSelector } from '../features/sett
 import UpdateChannel from './side-windows/UpdateChannel';
 import DeleteChannel from './side-windows/DeleteChannel';
 import LeaveChannel from './side-windows/LeaveChannel';
+import RemoveUser from './side-windows/RemoveUser'
 
 
 function Sidebar() {
@@ -39,7 +40,8 @@ function Sidebar() {
           ({ 
             updateChannel: <UpdateChannel/>,
             deleteChannel: <DeleteChannel/>,
-            leaveChannel: <LeaveChannel/>
+            leaveChannel: <LeaveChannel/>,
+            usersChannel: <RemoveUser/>
           })[togle]
           }
         </div>

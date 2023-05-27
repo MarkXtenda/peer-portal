@@ -9,7 +9,14 @@ class ChannelSerializer < ActiveModel::Serializer
   end
 
   def users_info
-    self.object.users.map { |user| { id: user.id, username: user.username } }
+    object.users.map do |user|
+      avatar_url = user.avatar&.url
+      {
+        id: user.id,
+        username: user.username,
+        avatar: avatar_url
+      }
+    end
   end
 
   def image
@@ -20,6 +27,12 @@ class ChannelSerializer < ActiveModel::Serializer
 
   def creator_id
     self.object.user_id
+  end
+
+  def serialize_avatar(avatar)
+    return unless avatar&.attached?
+
+    ActiveModelSerializers::SerializableResource.new(avatar, serializer: AvatarSerializer).as_json
   end
   # has_many :users, serializer: UserSerializer, only: [:username]
 end

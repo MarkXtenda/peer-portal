@@ -1,12 +1,13 @@
 import { chooseChannel } from '../channel/ChannelSlice';
-import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser} from '../fetchFunctions';
+import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser, fetchJoinChannel} from '../fetchFunctions';
+import { settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialStateUser = {
     isLoggedIn: false,
     user: {
       id: null,
       usernamae: null,
-      channel: [],
+      channels: [],
       avatar: {
         url: "default"
       }
@@ -29,14 +30,21 @@ export default function userReducer(state = initialStateUser, action) {
           return {...state, isLoggedIn: false, user: null, error: action.payload };
         case "user/logout":
           return {...state, isLoggedIn: false, user: null,  error: null };
-          case "user/avatar":
-            const updatedUser = {
-              ...state.user,
-              avatar: {
-                url: action.payload.url
-              }
-            };
-            return {...state, user: updatedUser};
+        case "user/avatar":
+          const updatedUser = {
+            ...state.user,
+            avatar: {
+              url: action.payload.url
+            }
+          };
+          return {...state, user: updatedUser};
+        case "user/channels/add":
+          const addedUserChannels = {...state.user, channels: [...state.user.channels, action.payload]}
+          return {...state, user: addedUserChannels};
+        case "user/channels/remove":
+          const updatedChannels = state.user.channels.filter(channel => channel.id !== action.payload);
+          const updatedUserChannels = {...state.user, channels:  updatedChannels}
+          return {...state, user: updatedUserChannels};
         default:
           return state;
       }
@@ -93,14 +101,27 @@ export function sendMessage(channelId, messageData) {
 export function removeUser(userId, channelId) {
   return async function(dispatch) {
     try {
-      await fetchRemoveUser(userId, channelId);
-      // Dispatch any necessary actions after the user is removed
+      const removedUserChannel = await fetchRemoveUser(userId, channelId);
+      dispatch(chooseChannel("default"))
+      dispatch(settingsTogleAction("default"))
+      dispatch({ type: "channel/delete", payload: removedUserChannel.channel_id })
+      dispatch({ type: "user/channels/remove", payload: removedUserChannel.channel_id})
     } catch (err) {
       dispatch({ type: "user/error", payload: err });
     }
   };
 }
 
-
-  
-
+export function addUser(userId, channelId) {
+  return async function(dispatch) {
+    try {
+      const addededUserChannel = await fetchJoinChannel(userId, channelId);
+      dispatch(chooseChannel(addededUserChannel))
+      dispatch(settingsTogleAction("default"))
+      dispatch({ type: "channel/add", payload: addededUserChannel })
+      dispatch({ type: "user/channels/add", payload: addededUserChannel})
+    } catch (err) {
+      dispatch({ type: "user/error", payload: err });
+    }
+  };
+}

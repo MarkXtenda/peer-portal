@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
-import { sendMessage } from '../features/user/userSlice';
+import { addUser, sendMessage } from '../features/user/userSlice';
 import Messages from './Messages';
 import { userDataSelector } from '../features/user/userSelector';
 import { settingsHideMenuAction } from '../features/settings/SettingsSlice';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
 import RemoveUser from './side-windows/RemoveUser';
+import logo from "./logo.svg"
 
 function Content() {
   const chosenChannelState = useSelector(channelChosenSelector)
   const userState = useSelector(userDataSelector)
   const [content, setContent] = useState("")
   const dispatch = useDispatch()
-  function handleRemoveUser() {
-    return(<RemoveUser/>);
-  }
   function handleMessageSent(e) {
     e.preventDefault();
     console.log('handleMessageSent called');
@@ -33,11 +31,15 @@ function Content() {
       <div className="background-image">
         <div>
           {/* OPTIMIZE THE CODE BELLOW */}
+          <div style={{textAlignLast: "center"}} >
+          <img 
+          style={{width: "100px", borderRadius: "50%"}} 
+          src={chosenChannelState.image ? chosenChannelState.image : logo} />
+          </div>
           <h1>{chosenChannelState !== "default" ? chosenChannelState.name : "Select a group to start messaging"}</h1>
           {chosenChannelState !== "default" && 
           <div>
-            <a href='#' onClick={handleRemoveUser}>Users: {chosenChannelState.users}</a>
-            <RemoveUser/>
+            <a href='#' className='usersChannel' onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>Users: {chosenChannelState.users}</a>
             {chosenChannelState.creator_id === userState.id 
             ? 
             <div>
@@ -45,7 +47,14 @@ function Content() {
               <button className='deleteChannel' onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>Delete Channel</button>
             </div>
             : 
-            <div><button className='leaveChannel' onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>Leave Channel</button></div>
+            <div>
+              {userState.channels.find((channel)=> channel.id === chosenChannelState.id) 
+              ?
+              <button className='leaveChannel' onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>Leave Channel</button>
+              :
+              <button className='joinChannel' onClick={()=>dispatch(addUser(userState.id, chosenChannelState.id))}>Join Channel</button>
+              }
+            </div>
             }
             
           </div>}

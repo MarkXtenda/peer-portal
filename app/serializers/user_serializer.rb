@@ -5,5 +5,10 @@ class UserSerializer < ActiveModel::Serializer
     self.object.channels
   end
 
-  has_one :avatar, serializer: AvatarSerializer
+  def avatar
+    if object.avatar&.attached?
+      ActiveModelSerializers::SerializableResource.new(object.avatar, serializer: AvatarSerializer).as_json
+    end
+  end
+  # has_one :avatar, serializer: AvatarSerializer
 end

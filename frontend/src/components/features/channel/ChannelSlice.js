@@ -1,4 +1,4 @@
-import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel } from '../fetchFunctions';
+import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel, fetchOneChannel } from '../fetchFunctions';
 import { settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialState = {
@@ -19,11 +19,11 @@ export default function channelReducer(state = initialState, action) {
       case "channel/load":
         return { ...state, channels: action.payload}
       case "channel/choose":
-        let choosenChannel = "default"
-        if (action.payload !== "default") {
-          choosenChannel = state.channels.find(element => element.name === action.payload.name)
-        }
-        return { ...state, channelCurrent: choosenChannel };
+        // let choosenChannel = "default"
+        // if (action.payload !== choosenChannel) {
+        //   choosenChannel = state.channels.find(element => element.name === action.payload.name)
+        // }
+        return { ...state, channelCurrent: action.payload };
       case "channel/search":
         return {...state, searchedChannels: action.payload};
       case "channel/clear":
@@ -42,6 +42,12 @@ export default function channelReducer(state = initialState, action) {
           return { ...state, channels: updatedChannels };
         }
         return state;
+      // case "channel/userRemoved":
+      //   if (action.payload) {
+      //     const removedUserArray = state.channelCurrent
+      //     removedUserArray.users_info.filter((user)=>user.username !== action.payload)
+      //     return { ...state, channels: updatedChannels };
+      //   }
       case "channel/error":
         return {...state, error: action.payload}  
       default:
@@ -110,9 +116,21 @@ export function addChannel(channelData) {
       dispatch({ type: "channel/add", payload: createdChannel });
       dispatch(chooseChannel(createdChannel))
       dispatch(settingsTogleAction("default"))
-      // Optionally, you can dispatch chooseChannel(createdChannel) to select the newly created channel
     } catch (err) {
       dispatch({ type: "channel/error", payload: err });
     }
   };
 }
+
+export function getOneChannel(channelId) {
+  return async function(dispatch) {
+    try {
+      const channel = await fetchOneChannel(channelId);
+      dispatch(chooseChannel(channel))
+      dispatch(settingsTogleAction("default"))
+    } catch (err) {
+      dispatch({ type: "channel/error", payload: err });
+    }
+  };
+}
+
