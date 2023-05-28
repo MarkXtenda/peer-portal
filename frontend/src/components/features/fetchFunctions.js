@@ -86,10 +86,7 @@ export function fetchAvatar(formData) {
 export function fetchSendMessage(channelId, messageData) {
   return fetch(`/channels/${channelId}/messages`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(messageData)
+    body: messageData
   })
   .then((r) => {
     if (r.ok) {

@@ -13,18 +13,25 @@ function Content() {
   const chosenChannelState = useSelector(channelChosenSelector)
   const userState = useSelector(userDataSelector)
   const [content, setContent] = useState("")
+  const [image, setImage] = useState(null)
   const dispatch = useDispatch()
   function handleMessageSent(e) {
     e.preventDefault();
     console.log('handleMessageSent called');
-    const data = {
-      "channel_id": chosenChannelState.id,
-      "user_id": userState.id,
-      "creator": userState.username,
-      "content": content
+    const formData = new FormData()
+    if (image !== null) {
+      formData.append("image", image)
+      formData.append("content", content)
     }
-    dispatch(sendMessage(chosenChannelState.id, data))
+    else {
+      formData.append("content", content)
+    }
+    formData.append("channel_id", chosenChannelState.id)
+    formData.append("user_id", userState.id)
+    formData.append("creator", userState.username)
     setContent("")
+    setImage(null)
+    dispatch(sendMessage(chosenChannelState.id, formData))
   }
   return (
     <div className="col-md-9 content" onClick={()=>dispatch(settingsHideMenuAction())}>
@@ -62,8 +69,13 @@ function Content() {
         {chosenChannelState !== "default" && <Messages/>}
       </div>
       <div style={{position: "fixed",bottom: "0px",left: "45%"}}>
-        <form onSubmit={handleMessageSent}>
-          {/* <button type='submit'>image</button> */}
+        <form onSubmit={handleMessageSent} encType="multipart/form-data">
+          <input
+            type="file"
+            accept="image/*"
+            multiple={false}
+            onChange={(e)=>setImage(e.target.files[0])}
+          />
           <input type="text" value={content} onChange={(e) => setContent(e.target.value)}></input>
           <button type="submit">send</button>
         </form>

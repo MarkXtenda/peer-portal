@@ -51,6 +51,7 @@ const Messages = () => {
               <span className="timestamp">{message.created_at}</span>
             </div>
             <div className="content">{message.content}</div>
+            {message.image ? <img src={message.image} alt='message image'/> : null}
           </div>
         </div>
       ))}

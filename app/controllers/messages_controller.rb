@@ -29,6 +29,6 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.permit(:content, :channel_id, :user_id, :creator, :message)
+    params.permit(:content, :channel_id, :user_id, :creator, :message, :image)
   end
 end
