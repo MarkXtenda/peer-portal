@@ -1,21 +1,22 @@
-import React, {lazy, Suspense, useState, useEffect} from 'react';
-import logo from './logo.svg';
-import { Navigate, Route, Routes } from 'react-router';
+import React, { Suspense, useState, useEffect} from 'react';
+import { Route, Routes } from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary'
 import Login from './components/login-signup-components/Login';
 import UserPage from './components/chat-components/UserPage';
 import './App.css';
 import Signup from './components/login-signup-components/Signup';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router'
 import { userIsLoggedInSelector, userDataSelector } from './components/features/user/userSelector';
+import Loading from './components/features/Loading';
 // rfce 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
-  const userDataState = useSelector(userDataSelector)
   const LoggedInState = useSelector(userIsLoggedInSelector)
-  const state = useSelector((state)=>state)
-
+  const location = useLocation()
+  const path = location.pathname.split('/')[1]
+  
   useEffect(() => {
     setIsLoading(true)
     // auto-login
@@ -24,7 +25,7 @@ function App() {
         r.json().then((user) => {
           dispatch({ type: "user/login", payload: user });
         });
-          setIsLoading(false)
+        setIsLoading(false)
       }
       else {
         setIsLoading(false)
@@ -40,12 +41,20 @@ function App() {
         <button onClick={resetErrorBoundary}>Try again</button>
     </>)
   }
-  
-  if (!LoggedInState) {
-    // if location is signup return Signup component
-    // else
-    return(<Login/>);
+
+  if (!LoggedInState && !isLoading) {
+    if (path === "signup") {
+      return <Signup/>
+    }
+    else {
+      return(<Login/>);
+    }
   }
+
+  if (isLoading) {
+    return <Loading/>
+  }
+
   return (
     <div className="App">
       <main>

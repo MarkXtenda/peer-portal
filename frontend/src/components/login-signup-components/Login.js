@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './Login.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../features/user/userSlice';
 
@@ -12,9 +12,6 @@ function Login() {
   const [errors, setErrors] = useState([])
   const navigate = useNavigate();
 
-  function handleSignupRoute(e) {
-    e.preventDefault()
-  }
   function handleLoginSubmit(e) {
     e.preventDefault()
     dispatch(loginUser(email, password))
@@ -43,7 +40,7 @@ function Login() {
         </div>
         <footer className="card-footer">
           <p className="mb-0">Don't have an account? 
-          <a href="/signup" className="card-link" onClick={handleSignupRoute}>Sign up</a>
+          <Link className="card-link" to="/signup">Sign up</Link>
           </p>
         </footer>
       </form>
