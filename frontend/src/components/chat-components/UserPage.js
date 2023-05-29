@@ -19,7 +19,9 @@ function ChannelComponent() {
   return (
     <div className="container-fluid">
       <div className="row">
-        {seeMenu && <Menu/>}
+        {seeMenu && 
+        <Menu/>
+        }
         <Sidebar onSearch={setSearch}/>
         {channelSearch.length > 0 && <SearchChannel users={search} clearSearch={setSearch}></SearchChannel>}
         <Content/>

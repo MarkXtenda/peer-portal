@@ -19,14 +19,13 @@ function UpdateChannel() {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('image', image);
-    formData.append('name', channelName);
-    formData.append('description', channelDescription);
-    console.log(channelData.id, formData)
+    if(image) {formData.append('image', image);}
+    if(channelName) {formData.append('name', channelName);}
+    if(channelDescription) {formData.append('description', channelDescription);}
     dispatch(updateChannel(channelData.id, formData))
   };
   return (
-    <div id='settings'>
+    <div id='settings' data-aos="fade-up">
       <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
       <form onSubmit={handleSubmit}>
         <img

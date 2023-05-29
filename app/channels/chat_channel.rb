@@ -15,6 +15,6 @@ class ChatChannel < ApplicationCable::Channel
   
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    # raise NoMethodError
   end
 end

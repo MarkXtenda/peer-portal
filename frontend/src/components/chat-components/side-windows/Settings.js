@@ -19,7 +19,7 @@ function Settings() {
         dispatch(changeAvatarUser(formData))    
     }
     return(
-        <div id="settings">
+        <div id="settings" data-aos="fade-up">
             <div className="default" onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>X</div>
             <form onSubmit={handleSubmit}>
                 

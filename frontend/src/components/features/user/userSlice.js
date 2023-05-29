@@ -1,6 +1,6 @@
 import { chooseChannel } from '../channel/ChannelSlice';
 import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser, fetchJoinChannel} from '../fetchFunctions';
-import { settingsTogleAction } from '../settings/SettingsSlice';
+import { settingsHideMenuAction, settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialStateUser = {
     isLoggedIn: false,
@@ -54,6 +54,7 @@ export function loginUser(email, password) {
     return async function(dispatch) {
       try {
         const user = await fetchLogin(email, password);
+        dispatch(settingsHideMenuAction())
         dispatch({ type: "user/login", payload: user });
       } catch (err) {
         dispatch({ type: "user/error", payload: err });

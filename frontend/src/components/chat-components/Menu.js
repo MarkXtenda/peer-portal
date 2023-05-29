@@ -6,13 +6,14 @@ import Settings from './side-windows/Settings';
 import { userDataSelector } from '../features/user/userSelector';
 import CreateChannel from './side-windows/CreateChannel';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
-import { settingsTogleSelector } from '../features/settings/SettingsSelector';
+import { settingsSeeMenuSelector, settingsTogleSelector } from '../features/settings/SettingsSelector';
 
 function Menu() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const userData = useSelector(userDataSelector)
   const togle = useSelector(settingsTogleSelector)
+  const seeMenu = useSelector(settingsSeeMenuSelector)
   function handleLogout(e) {
     e.preventDefault();
     dispatch(logoutUser())

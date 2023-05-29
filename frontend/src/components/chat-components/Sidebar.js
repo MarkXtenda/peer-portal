@@ -41,7 +41,7 @@ function Sidebar() {
             updateChannel: <UpdateChannel/>,
             deleteChannel: <DeleteChannel/>,
             leaveChannel: <LeaveChannel/>,
-            usersChannel: <RemoveUser/>
+            usersChannel: <RemoveUser/>,
           })[togle]
           }
         </div>

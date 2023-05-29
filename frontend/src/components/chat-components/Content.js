@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
-import { addUser, sendMessage } from '../features/user/userSlice';
+import { addUser } from '../features/user/userSlice';
 import Messages from './Messages';
 import { userDataSelector } from '../features/user/userSelector';
 import { settingsHideMenuAction } from '../features/settings/SettingsSlice';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
-import RemoveUser from './side-windows/RemoveUser';
 import logo from "./logo.svg"
 import MessageForm from './user-page-components/MessageForm';
 

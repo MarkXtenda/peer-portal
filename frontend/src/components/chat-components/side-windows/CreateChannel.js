@@ -17,7 +17,7 @@ function CreateChannel() {
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData()
-    formData.append("image", image)
+    if (image) {formData.append("image", image)}
     formData.append("name", channelName)
     formData.append("description", channelDescription)
     formData.append("private", channelPrivate)
@@ -26,7 +26,7 @@ function CreateChannel() {
   }
 
   return (
-    <div id='settings'>
+    <div id='settings'> 
       <div className="default" onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>X</div>
       <form onSubmit={handleSubmit}>
         <img

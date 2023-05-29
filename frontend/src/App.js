@@ -7,8 +7,9 @@ import './App.css';
 import Signup from './components/login-signup-components/Signup';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router'
-import { userIsLoggedInSelector, userDataSelector } from './components/features/user/userSelector';
+import { userIsLoggedInSelector } from './components/features/user/userSelector';
 import Loading from './components/features/Loading';
+
 // rfce 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
