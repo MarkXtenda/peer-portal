@@ -8,11 +8,12 @@ import { settingsSeeMenuSelector, settingsTogleSelector } from '../features/sett
 import UpdateChannel from './side-windows/UpdateChannel';
 import DeleteChannel from './side-windows/DeleteChannel';
 import LeaveChannel from './side-windows/LeaveChannel';
-import RemoveUser from './side-windows/RemoveUser'
+import RemoveUser from './side-windows/RemoveUser';
+import { motion } from 'framer-motion';
 
 
 function Sidebar() {
-  const togle = useSelector(settingsTogleSelector)
+  const toggle = useSelector(settingsTogleSelector)
   const [name, setChannelname] = useState("")
   const dispatch = useDispatch()
   const hideMenu = useSelector(settingsSeeMenuSelector)
@@ -20,6 +21,15 @@ function Sidebar() {
     e.preventDefault();
     dispatch(searchChanels(name))
     }
+
+  const toggleVariants = {
+    hidden: {
+      x: '-100%',
+    },
+    visible: {
+      x: 0,
+    },
+  };
   return (
     <div className="col-md-3 sidebar" style={{display: hideMenu ? "none" : "block"}}>
           <div className="sidebar-header d-flex">
@@ -36,14 +46,26 @@ function Sidebar() {
             </form>
           </div>
           <Channels/>
-          {
+          <motion.div
+            key={toggle}
+            className="toggle-content"
+            initial="hidden"
+            animate={toggle !== "default" ? 'visible' : 'hidden'}
+            variants={toggleVariants}
+          >
+            {toggle === 'updateChannel' && <UpdateChannel />}
+            {toggle === 'deleteChannel' && <DeleteChannel />}
+            {toggle === 'leaveChannel' && <LeaveChannel />}
+            {toggle === 'usersChannel' && <RemoveUser />}
+          </motion.div>
+          {/* {
           ({ 
             updateChannel: <UpdateChannel/>,
             deleteChannel: <DeleteChannel/>,
             leaveChannel: <LeaveChannel/>,
             usersChannel: <RemoveUser/>,
-          })[togle]
-          }
+          })[toggle]
+          } */}
         </div>
   )
 }

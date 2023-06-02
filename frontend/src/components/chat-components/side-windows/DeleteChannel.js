@@ -16,7 +16,7 @@ function DeleteChannel() {
   };
 
   return (
-    <div id='settings' data-aos="fade-up">
+    <div id='settings'>
       <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
       Are you sure you want to delete the channel?
       <button onClick={handleDelete}>Yes</button>

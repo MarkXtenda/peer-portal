@@ -25,7 +25,7 @@ function UpdateChannel() {
     dispatch(updateChannel(channelData.id, formData))
   };
   return (
-    <div id='settings' data-aos="fade-up">
+    <div id='settings'>
       <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
       <form onSubmit={handleSubmit}>
         <img
