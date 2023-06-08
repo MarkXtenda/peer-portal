@@ -11,16 +11,26 @@ function DeleteChannel() {
 
   const handleDelete = () => {
     dispatch(deleteChannel(channelCurrent.id));
-    dispatch(settingsTogleAction("default"))
+    dispatch(settingsTogleAction("deleteChannel"))
     // Add any additional logic or redirect after successful deletion
   };
+  function handleNo() {
+    dispatch(settingsTogleAction("deleteChannel"))
+  }
 
   return (
-    <div id='settings'>
-      <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
-      Are you sure you want to delete the channel?
-      <button onClick={handleDelete}>Yes</button>
-      <button className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>No</button>
+    <div id='setting'>
+      <div id="deleteChannel" className='default' onClick={handleNo}>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="form-container">
+      <label className='notification-label'>Are you sure you want to delete the channel?</label>
+      </div>
+      <div className='options'>
+        <button type="submit" onClick={handleDelete}>Yes</button>
+        <button type="submit" onClick={(e) => handleNo}>No</button>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 import Sidebar from './Sidebar';
 import Content from './Content';
 import Menu from './Menu';
@@ -10,24 +8,30 @@ import SearchChannel from './SearchChannel';
 import { useSelector } from 'react-redux';
 import { channelSearchSelector } from '../features/channel/ChannelSelectors';
 import { settingsSeeMenuSelector } from '../features/settings/SettingsSelector';
+import { motion } from 'framer-motion';
+import { menuVariants } from '../features/animationVariants';
 
-function ChannelComponent() {
+function UserPage() {
   const seeMenu = useSelector(settingsSeeMenuSelector)
   const [search, setSearch] = useState([])
   const channelSearch = useSelector(channelSearchSelector)
-  console.log(search)
+
   return (
     <div className="container-fluid">
-      <div className="row">
-        {seeMenu && 
+      <motion.div
+      className="toggle-content"
+      initial="hidden"
+      animate={seeMenu ? 'visible' : 'hidden'}
+      variants={menuVariants}>
         <Menu/>
-        }
+      </motion.div>
+      <div className="row">
         <Sidebar onSearch={setSearch}/>
         {channelSearch.length > 0 && <SearchChannel users={search} clearSearch={setSearch}></SearchChannel>}
-        <Content/>
+          <Content/>
       </div>
     </div>
   );
 }
 
-export default ChannelComponent;
+export default UserPage;

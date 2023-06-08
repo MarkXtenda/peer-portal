@@ -1,0 +1,11 @@
+.content {
+    overflow-y: auto;
+    text-align-last: left;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none; /* Hide the scroll bar */
+  }
+  

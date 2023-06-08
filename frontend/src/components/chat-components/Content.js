@@ -8,6 +8,7 @@ import { settingsHideMenuAction } from '../features/settings/SettingsSlice';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
 import logo from "./logo.svg"
 import MessageForm from './user-page-components/MessageForm';
+import "./Content.css"
 
 function Content() {
   const chosenChannelState = useSelector(channelChosenSelector)
@@ -15,13 +16,13 @@ function Content() {
   const dispatch = useDispatch()
   
   return (
-    <div className="col-md-9 content" onClick={()=>dispatch(settingsHideMenuAction())}>
+    <div className="content" onClick={()=>dispatch(settingsHideMenuAction())}>
       <div className="background-image">
         <div>
           {/* OPTIMIZE THE CODE BELLOW */}
           <div style={{textAlignLast: "center"}} >
           <img 
-          style={{width: "100px", borderRadius: "50%"}} 
+          style={{height: "100px", width: "100px", borderRadius: "50%"}} 
           src={chosenChannelState.image ? chosenChannelState.image : logo} />
           </div>
           <h1>{chosenChannelState !== "default" ? chosenChannelState.name : "Select a group to start messaging"}</h1>
@@ -48,10 +49,10 @@ function Content() {
           </div>}
         </div>
         {chosenChannelState !== "default" && 
-        <div>
+        <>
           <Messages/>
           <MessageForm/>
-        </div>
+        </>
         }
       </div>
     </div>

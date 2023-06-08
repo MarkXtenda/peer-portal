@@ -13,12 +13,22 @@ function LeaveChannel() {
   function handleLeaveChannel() {
     dispatch(removeUser(userData.id, channel.id));
   }
+  function handleNo() {
+    dispatch(settingsTogleAction("leaveChannel"))
+  }
   return (
-    <div id='settings'>
-      <div className="default" onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>X</div>
-      Are you surer you want to leave the channel?
-      <button onClick={handleLeaveChannel}>Yes</button>
-      <button className="default" onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>No</button>
+    <div id='setting'>
+      <div id="leaveChannel" className='default' onClick={handleNo}>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="form-container">
+        <label className='notification-label'>Are you surer you want to leave the channel?</label>
+      </div>
+      <div className='options'>
+        <button type="submit" onClick={handleLeaveChannel}>Yes</button>
+        <button type="submit" onClick={(e)=>handleNo}>No</button>
+      </div>
     </div>
   )
 }

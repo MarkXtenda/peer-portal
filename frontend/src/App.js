@@ -43,14 +43,14 @@ function App() {
     </>)
   }
 
-  if (!LoggedInState && !isLoading) {
-    if (path === "signup") {
-      return <Signup/>
-    }
-    else {
-      return(<Login/>);
-    }
-  }
+  // if (!LoggedInState && !isLoading) {
+  //   if (path === "signup") {
+  //     return <Signup/>
+  //   }
+  //   else {
+  //     return(<Login/>);
+  //   }
+  // }
 
   if (isLoading) {
     return <Loading/>
@@ -64,9 +64,9 @@ function App() {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<UserPage/>}>
+            {!LoggedInState && <Route path="/login" element={<Login />} />}
+            {!LoggedInState && <Route path="/signup" element={<Signup />} />}
+            <Route path="/" element={LoggedInState ? <UserPage/> : path === "signup" ? <Signup/> : <Login/>}>
               {/* <Route path="@me" element={<Homepage />}/> */}
             </Route>
           </Routes>

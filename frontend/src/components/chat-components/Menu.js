@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { logoutUser } from '../features/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Settings from './side-windows/Settings';
 import { userDataSelector } from '../features/user/userSelector';
-import CreateChannel from './side-windows/CreateChannel';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
-import { settingsSeeMenuSelector, settingsTogleSelector } from '../features/settings/SettingsSelector';
+import MenuOptions from './MenuOptions';
+import "./Menu.css"
 
 function Menu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(userDataSelector);
-  const toggle = useSelector(settingsTogleSelector);
-  const seeMenu = useSelector(settingsSeeMenuSelector);
-
-  const [isToggled, setIsToggled] = useState(false);
 
   function handleLogout(e) {
     e.preventDefault();
@@ -24,30 +18,20 @@ function Menu() {
     navigate('/login', { replace: true });
   }
 
-  const toggleVariants = {
-    hidden: {
-      x: '-100%',
-    },
-    visible: {
-      x: 0,
-    },
-  };
-
   const handleToggle = (e, className) => {
     e.preventDefault();
     dispatch(settingsTogleAction(className));
-    setIsToggled(!isToggled);
   };
 
   return (
-    <div className="col-md-3 sidebar">
-      <div className="sidebar-header d-flex">
+    <div className="menu-container">
+      <div className="sidebar-header">
         <h1>{userData.username}</h1>
       </div>
-      <ul className="list-ustyled">
+      <ul className="menu-list">
         <li>
           <a
-            className="createChannel"
+            className="menu-item createChannel"
             href="#"
             onClick={(e) => handleToggle(e, 'createChannel')}
           >
@@ -56,7 +40,7 @@ function Menu() {
         </li>
         <li>
           <a
-            className="settings"
+            className="menu-item settings"
             href="#"
             onClick={(e) => handleToggle(e, 'settings')}
           >
@@ -65,7 +49,7 @@ function Menu() {
         </li>
         <li>
           <a
-            className="nightMode"
+            className="menu-item nightMode"
             href="#"
             onClick={(e) => handleToggle(e, 'nightMode')}
           >
@@ -73,22 +57,12 @@ function Menu() {
           </a>
         </li>
         <li>
-          <a href="#" onClick={handleLogout}>
+          <a href="#" className="menu-item logout" onClick={handleLogout}>
             Logout
           </a>
         </li>
       </ul>
-      <motion.div
-        key={toggle}
-        className="toggle-content"
-        initial="hidden"
-        animate={toggle !== "default" ? 'visible' : 'hidden'}
-        variants={toggleVariants}
-      >
-        {toggle === 'createChannel' && <CreateChannel />}
-        {toggle === 'settings' && <Settings />}
-        {toggle === 'nightMode' && <div>Night Mode</div>}
-      </motion.div>
+      <MenuOptions/>
     </div>
   );
 }

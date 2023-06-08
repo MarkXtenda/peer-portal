@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
       # channel_name = "messages_channel"
       # Action cable to return a single message 
       # ActionCable.server.broadcast "public_chat", {messages: @message}
-      ActionCable.server.broadcast "public_chat", {messages: Message.where(channel_id: params[:channel_id])}
+      ActionCable.server.broadcast 'public_chat', {messages: Message.where(channel_id: params[:channel_id])}
     else
       render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end

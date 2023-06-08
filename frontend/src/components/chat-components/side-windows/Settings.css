@@ -1,26 +1,167 @@
-#settings {
-    /* visibility: hidden; */
+#setting {
     position: absolute;
-    /* width: 40%;
-    height: 70vh; */
     display: flex;
     flex-flow: wrap;
     flex-direction: column;
     justify-content: space-around;
     border-radius: 15px;
     overflow-y: auto;
-    background-color: white;
+    background-color: #fff;
     left: 40vw;
-    top: -20vh;
-
+    top: -40vh;
     margin-left: -12.5%;
-
     padding: 5px;
-    border: 4px solid;
+    border: 4px solid #ddd;
+}
+  
+.form-container {
+display: flex;
+padding-top: 50px;
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;
 }
 
 .img-avatar {
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    object-fit: cover;
 }
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.file-input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+/* CUSTOM SETTINGS INPUT FOR FILES */
+.file-input::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #084cdf;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+  }
+  
+  .file-input::file-selector-button:hover {
+    background: #0d45a5;
+  }
+  /* CUSTOM SETTINGS INPUT FOR FILES */
+
+.custom-file-upload {
+    margin: 0 100px;
+    margin-top: 10px;
+    background-color: #0088cc;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    margin: 0 10px;
+    margin-top: 10px;
+    background-color: #0088cc;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-remove-button, .admin-remove-button {
+    margin: 0 10px;
+    margin-top: 10px;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.user-remove-button {
+    background-color: rgb(244, 45, 45);
+    cursor: pointer;
+}
+
+.admin-remove-button {
+    background-color: rgb(244, 129, 129);
+}
+
+button[type="submit"]:hover {
+    background-color: #009fd4;
+}
+
+.file-input-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align-last: center;
+  }
+
+/* CLOSE BUTTON */
+.default {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: #f42d2d;
+    border-radius: 10%;
+  }
+  
+  .default span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .default span:first-child {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  .default span:last-child {
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+  
+  .default:hover {
+    background-color: #f33e50;
+  }
+/* CLOSE BUTTON */
+
+input[type="checkbox"]{
+    margin: 0 10px;
+}
+
+.notification-label {
+    padding: 0 5px;
+    width: 300px;
+}
+
+.options { 
+    display: flex;
+    flex-direction: column;
+}
+/* user in removeUsers */
+.user-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+/* user in removeUsers */

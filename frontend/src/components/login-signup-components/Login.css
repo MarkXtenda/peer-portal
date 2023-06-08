@@ -1,44 +1,89 @@
-.bg {
-    background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-  
-  .card {
-    margin-top: 100px;
-  }
-  
-  .card-header {
-    background-color: #7289da;
-    color: white;
-  }
-  
-  .btn-primary {
-    background-color: #7289da;
-    border-color: #7289da;
-  }
-  
-  .btn-primary:hover {
-    background-color: #677bc4;
-    border-color: #677bc4;
-  }
-  
-  .form-check-input:checked ~ .form-check-label {
-    color: #7289da;
-  }
-  
-  .form-check-input:focus ~ .form-check-label {
-    color: #7289da;
-  }
-  
-  .form-control:focus {
-    border-color: #7289da;
-    box-shadow: none;
-  }
-  
-  .card-link {
-    color: #7289da;
-  }
-  
+.sign-on-container {
+  background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-on-form {
+  background-color: #fff;
+  width: 300px;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sign-on-header {
+  background-color: #0088cc;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.sign-on-title {
+  margin-bottom: 0;
+}
+
+.sign-on-body {
+  padding: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.form-check {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-check-input:checked ~ .form-check-label {
+  color: #7289da;
+}
+
+.form-check-input:focus ~ .form-check-label {
+  color: #7289da;
+}
+
+.btn-primary {
+  background-color: #7289da;
+  border-color: #7289da;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #677bc4;
+  border-color: #677bc4;
+}
+
+.sign-on-footer {
+  padding: 10px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.card-link {
+  color: #7289da;
+}

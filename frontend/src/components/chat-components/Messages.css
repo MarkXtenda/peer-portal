@@ -1,3 +1,4 @@
+
 h1 {
   text-align-last: center;
 }
@@ -7,6 +8,7 @@ h1 {
     /* overflow-y: scroll; */
     padding: 10px;
     font-size: 14px;
+    margin-bottom: 50px;
     height: 100%;
   }
   
@@ -40,11 +42,6 @@ h1 {
 
   .timestamp {
     padding: 0 10px;
-  }
-  
-  .content {
-    text-align-last: left;
-    margin-top: 5px;
   }
 
   .message-content p {

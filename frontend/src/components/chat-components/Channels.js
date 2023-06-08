@@ -14,16 +14,22 @@ function Channels() {
   function handleChannelClick(e, channel) {
     e.preventDefault()
     dispatch(chooseChannel(channel))
-    console.log(channel)
+  }
+  function handleLongStrings(string) {
+    if (string.length >= 25) {
+      return string.substring(0,19).concat("...");
+    } else {
+      return string;
+    }
   }
   useEffect(()=>{
     dispatch(showChannels())
   },[])
   return (
     <div className="sidebar-body">
-            <ul className="list-unstyled">
+            <ul className="channel-list">
               {state.length !== 0 && state.map((channel, index)=>
-              <li style={{height: "50px"}} key={index} className={channel.name === chosenChannelState.name ? "chosen" : null}><img style={{height: "50px", width: "50px", borderRadius: "50%", float: "left"}} src={channel.image ? channel.image : logo} /><a key={index+1} name={channel.name} href='#' onClick={(e)=>handleChannelClick(e, channel)}>{channel.name}</a></li>
+              <li style={{height: "50px"}} key={index} className={channel.name === chosenChannelState.name ? "chosen" : null}><img style={{height: "50px", width: "50px", borderRadius: "50%", float: "left"}} src={channel.image ? channel.image : logo} /><a key={index+1} name={channel.name} href='#' onClick={(e)=>handleChannelClick(e, channel)}>{handleLongStrings(channel.name)}</a></li>
               )}
             </ul>
           </div>

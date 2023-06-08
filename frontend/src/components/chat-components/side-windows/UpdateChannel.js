@@ -24,33 +24,41 @@ function UpdateChannel() {
     if(channelDescription) {formData.append('description', channelDescription);}
     dispatch(updateChannel(channelData.id, formData))
   };
+
   return (
-    <div id='settings'>
-      <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
+    <div id='setting'>
+      <div className="default" id='updateChannel' onClick={()=>dispatch(settingsTogleAction("updateChannel"))}>
+        <span></span>
+        <span></span>
+      </div>
       <form onSubmit={handleSubmit}>
-        <img
-          className="img-avatar"
-          src={image ? URL.createObjectURL(image) : avatarData.image ? avatarData.image : DEFAULT_CHANNEL_URL}
-          alt="user avatar"
-        />
+        <div className="form-container">
+          <img
+            className="img-avatar"
+            src={image ? URL.createObjectURL(image) : avatarData.image ? avatarData.image : DEFAULT_CHANNEL_URL}
+            alt="user avatar"
+          />
+        </div>
         <label>Channel Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          multiple={false}
-          onChange={(e) => setAvatar(e.target.files[0])}
-        />
-        <label>Channel Name:</label>
-        <input
-          value={channelName}
-          onChange={(e) => setChannelName(e.target.value)}
-        />
-        <label>Channel Description</label>
-        <input
-          value={channelDescription}
-          onChange={(e) => setChannelDescription(e.target.value)}
-        />
-        <input type="submit" value="Update Channel" />
+        <div className="file-input-container">
+          <input
+            type="file"
+            accept="image/*"
+            multiple={false}
+            onChange={(e) => setAvatar(e.target.files[0])}
+          />
+          <label>Channel Name:</label>
+          <input
+            value={channelName}
+            onChange={(e) => setChannelName(e.target.value)}
+          />
+          <label>Channel Description</label>
+          <input
+            value={channelDescription}
+            onChange={(e) => setChannelDescription(e.target.value)}
+          />
+          <button type="submit">Update</button>
+        </div>
       </form>
     </div>
   )

@@ -1,5 +1,6 @@
 const initialState = {
     togle: "default",
+    toggleState: false,
     seeMenu: false
 }
 
@@ -26,7 +27,12 @@ export const settingsHideMenuAction = () => {
 export default function settingsReducer(state = initialState, action) {
     switch (action.type) {
         case "settings/togle":
-          return { ...state, togle: action.payload };
+            if (action.payload !== state.togle) {
+                return { ...state, togle: action.payload, toggleState: !state.toggleState };
+            }
+            else {
+                return { ...state, toggleState: !state.toggleState}
+            }
         case "settings/seeMenu":
             return { ...state, togle: "default", seeMenu: action.payload}
         case "settings/hideMenu":

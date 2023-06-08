@@ -24,33 +24,40 @@ function CreateChannel() {
     formData.append("invitekey", channelInvitekey)
     dispatch(addChannel(formData));
   }
-
+  
   return (
-    <div id='settings'> 
-      <div className="default" onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>X</div>
+    <div id='setting'> 
+      <div id="createChannel" className='default' onClick={()=>dispatch(settingsTogleAction("createChannel"))}>
+        <span></span>
+        <span></span>
+      </div>
       <form onSubmit={handleSubmit}>
-        <img
-          className="img-avatar"
-          src={image ? URL.createObjectURL(image) : DEFAULT_CHANNEL_URL}
-          alt="channel image"
-        />
-        <label>Channel Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          multiple={false}
-          onChange={(e)=>setImage(e.target.files[0])}
-        />
-        <label>Channel Name:</label>
-        <input value={channelName} onChange={(e) => setChannelName(e.target.value)} />
-        <label>Channel Description</label>
-        <input value={channelDescription} onChange={(e) => setChannelDescription(e.target.value)} />
-        <label>Channel Privacy: private</label>
-        <input type='checkbox' value={channelPrivate} onChange={(e) => setChannelPrivate(!channelPrivate)} />
-        <label>Channel Invite Key</label>
-        <input value={channelInvitekey} onChange={(e) => setChannelInvitekey(e.target.value)} />
-        <p>Channel Creator: {userData.username} (you)</p>
-        <input type="submit" />
+        <div className='form-container'>
+          <img
+            className="img-avatar"
+            src={image ? URL.createObjectURL(image) : DEFAULT_CHANNEL_URL}
+            alt="channel image"
+          />
+          </div>
+          <label htmlFor="avatar-input">Channel Image</label>
+          <div className="file-input-container">
+            <input
+              type="file"
+              accept="image/*"
+              multiple={false}
+              onChange={(e)=>setImage(e.target.files[0])}
+            />
+            <label>Channel Name:</label>
+            <input value={channelName} onChange={(e) => setChannelName(e.target.value)} />
+            <label>Channel Description</label>
+            <input value={channelDescription} onChange={(e) => setChannelDescription(e.target.value)} />
+            <label>Channel Privacy: private</label>
+            <input type='checkbox' value={channelPrivate} onChange={(e) => setChannelPrivate(!channelPrivate)} />
+            <label>Channel Invite Key</label>
+            <input value={channelInvitekey} onChange={(e) => setChannelInvitekey(e.target.value)} />
+            <p>Channel Creator: {userData.username} (you)</p>
+            <button type="submit">Submit</button>
+          </div>
       </form>
     </div>
   );

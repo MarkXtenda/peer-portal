@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Signup = () => {
   return (
-    <main className="container-fluid bg d-flex justify-content-center align-items-center">
-      <form className="card">
-        <header className="card-header">
-          <h4 className="card-title">Create a new account</h4>
+    <main className="sign-on-container">
+      <form className="sign-on-form">
+        <header className="sign-on-header">
+          <h4 className="sign-on-title">Create a new account</h4>
         </header>
-        <div className="card-body">
+        <div className="sign-on-body">
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input type="text" className="form-control" id="username" placeholder="Enter your username" />
@@ -28,9 +28,9 @@ const Signup = () => {
           </div>
           <button type="submit" className="btn btn-primary btn-block">Create account</button>
         </div>
-        <footer className="card-footer">
+        <footer className="sign-on-footer">
           <p className="mb-0">Already have an account? 
-          <Link className="card-link" to="/login">Sign in</Link>
+            <Link className="card-link" to="/login">Sign in</Link>
           </p>
         </footer>
       </form>

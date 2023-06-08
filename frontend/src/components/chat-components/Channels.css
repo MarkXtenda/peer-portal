@@ -1,5 +1,27 @@
+.channel-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .channel-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .channel-list a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .channel-list li:hover {
+    background-color: #f0f0f0;
+  }
+
 .chosen {
-    opacity: 0.5;
-    background-color: aliceblue;
-    box-shadow: rgb(16, 22, 36) 0px 3px 7px -3px;
+    background-color: #f0f0f0;
 }

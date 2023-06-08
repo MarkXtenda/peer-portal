@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {cable} from '../features/actioncable';
 import { channelChosenSelector } from '../features/channel/ChannelSelectors';
 import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 import './Messages.css';
 import {DEFAULT_AVATAR_URL} from '../features/constants'
 
 const Messages = () => {
+  const bottomEl = useRef(null);
   const [messages, setMessages] = useState(new Array());
   const chosenChannelState = useSelector(channelChosenSelector)
 
+  const scrollToBottom = () => {
+    bottomEl?.current?.scrollIntoView();
+  };
   // ActionCable useEffect - realtime messaging data
   useEffect(() => {
     const channel = cable.subscriptions.create(
@@ -18,7 +23,9 @@ const Messages = () => {
         disconnected: () => console.log('disconnected'),
         // !!! Need some work on handling created array
         received: data => {
-          console.log(data)
+          if (data !== messages) {
+            scrollToBottom()
+          }
           if (data) {
             if (data.messages.length === 0 || data.messages.length >= 1) {
               // if the new array loaded from a start display it
@@ -34,7 +41,11 @@ const Messages = () => {
     );
     return () => channel.unsubscribe();
   }, [chosenChannelState, setMessages, messages]);
-  console.log(messages)
+  
+  useEffect(()=>{
+    scrollToBottom()
+  },[]);
+  
   return(
     <div className="message-list">
     {messages.length !== 0 &&
@@ -50,11 +61,12 @@ const Messages = () => {
               <span className="username">{message.creator}</span>
               <span className="timestamp">{message.created_at}</span>
             </div>
-            <div className="content">{message.content}</div>
+            <div className="message-content">{message.content}</div>
             {message.image ? <img src={message.image} alt='message image'/> : null}
           </div>
         </div>
       ))}
+      <div className="refee" ref={bottomEl}></div>
   </div>
   );
 };

@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./RemoveUser.css";
+import "./Settings.css";
 import { channelChosenSelector } from "../../features/channel/ChannelSelectors";
 import { removeUser } from "../../features/user/userSlice";
 import { settingsTogleAction } from "../../features/settings/SettingsSlice";
 import { userDataSelector } from "../../features/user/userSelector";
+import { DEFAULT_AVATAR_URL } from "../../features/constants";
 
 function RemoveUser() {
   const dispatch = useDispatch();
@@ -21,24 +22,29 @@ function RemoveUser() {
   }
 
   return (
-    <div id="some-div">
-      <div className="default" onClick={(e) => dispatch(settingsTogleAction(e.target.className))}>X</div>
-      <div id="all-users">
-        <h2>Users:</h2>
+    <div id="setting">
+      <div id="default" className="removeChannel" onClick={()=>dispatch(settingsTogleAction("removeChannel"))}>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="form-container">
+      <label className='notification-label'>Users:</label>
+      </div>
+      <div className="file-input-container">
         {channelUsers.map((user) => (
           <div key={user.id} id={user.id} className="user-item">
-            <img alt="" src={user.avatar} className="avatar" />
+            <img alt="" src={user.avatar ? user.avatar : DEFAULT_AVATAR_URL} className="avatar" />
             <span className="username">{user.username}</span>
             {user.username === userData.username
             ?
-            <button disabled>Admin</button>
+            <button className="admin-remove-button" disabled>Admin</button>
             :
-            <button onClick={() => handleUserRemove(user.id)} className="remove button">Remove</button>
+            <button onClick={() => handleUserRemove(user.id)} className="user-remove-button">Remove</button>
             }
           </div>
         ))}
-      </div>
-    </div>
+        </div>
+        </div>
   );
 }
 
