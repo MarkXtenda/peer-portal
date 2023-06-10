@@ -42,10 +42,11 @@ function CreateChannel() {
           <label htmlFor="avatar-input">Channel Image</label>
           <div className="file-input-container">
             <input
-              type="file"
-              accept="image/*"
-              multiple={false}
-              onChange={(e)=>setImage(e.target.files[0])}
+            className="file-input"
+            type="file"
+            accept="image/*"
+            multiple={false}
+            onChange={(e)=>setImage(e.target.files[0])}
             />
             <label>Channel Name:</label>
             <input value={channelName} onChange={(e) => setChannelName(e.target.value)} />

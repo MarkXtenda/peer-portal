@@ -19,15 +19,13 @@ function Content() {
     <div className="content" onClick={()=>dispatch(settingsHideMenuAction())}>
       <div className="background-image">
         <div>
-          {/* OPTIMIZE THE CODE BELLOW */}
-          <div style={{textAlignLast: "center"}} >
+          <div className='channel-image-div' style={{textAlignLast: "center"}} >
           <img 
           style={{height: "100px", width: "100px", borderRadius: "50%"}} 
           src={chosenChannelState.image ? chosenChannelState.image : logo} />
           </div>
-          <h1>{chosenChannelState !== "default" ? chosenChannelState.name : "Select a group to start messaging"}</h1>
-          {chosenChannelState !== "default" && 
-          <div>
+          <h1 id='channel-name'>{chosenChannelState.name}</h1>
+          <div className='channel-settings'>
             <a href='#' className='usersChannel' onClick={(e)=>dispatch(settingsTogleAction(e.target.className))}>Users: {chosenChannelState.users}</a>
             {chosenChannelState.creator_id === userState.id 
             ? 
@@ -46,14 +44,10 @@ function Content() {
             </div>
             }
             
-          </div>}
+          </div>
         </div>
-        {chosenChannelState !== "default" && 
-        <>
           <Messages/>
           <MessageForm/>
-        </>
-        }
       </div>
     </div>
   )

@@ -23,14 +23,14 @@ function RemoveUser() {
 
   return (
     <div id="setting">
-      <div id="default" className="removeChannel" onClick={()=>dispatch(settingsTogleAction("removeChannel"))}>
+      <div id="removeChannel" className="default" onClick={()=>dispatch(settingsTogleAction("removeChannel"))}>
         <span></span>
         <span></span>
       </div>
       <div className="form-container">
       <label className='notification-label'>Users:</label>
       </div>
-      <div className="file-input-container">
+      <div className="users-container">
         {channelUsers.map((user) => (
           <div key={user.id} id={user.id} className="user-item">
             <img alt="" src={user.avatar ? user.avatar : DEFAULT_AVATAR_URL} className="avatar" />

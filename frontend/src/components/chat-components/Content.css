@@ -5,6 +5,18 @@
     height: 100vh;
   }
 
+  .channel-image-div {
+    padding-top: 30px;
+  }
+
+  #channel-name {
+    margin: 10px;
+  }
+
+  .channel-settings {
+    padding: 0 0 10px 30px;
+  }
+
   .content::-webkit-scrollbar {
     display: none; /* Hide the scroll bar */
   }

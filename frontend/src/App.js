@@ -1,5 +1,6 @@
 import React, { Suspense, useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router';
+import { Navigate } from "react-router-dom";
 import {ErrorBoundary} from 'react-error-boundary'
 import Login from './components/login-signup-components/Login';
 import UserPage from './components/chat-components/UserPage';
@@ -9,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router'
 import { userIsLoggedInSelector } from './components/features/user/userSelector';
 import Loading from './components/features/Loading';
+import HomePage from './components/chat-components/HomePage';
 
 // rfce 
 function App() {
@@ -17,7 +19,7 @@ function App() {
   const LoggedInState = useSelector(userIsLoggedInSelector)
   const location = useLocation()
   const path = location.pathname.split('/')[1]
-  
+  const channelIdPath = location.pathname.split('/')[2]
   useEffect(() => {
     setIsLoading(true)
     // auto-login
@@ -64,11 +66,10 @@ function App() {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            {!LoggedInState && <Route path="/login" element={<Login />} />}
-            {!LoggedInState && <Route path="/signup" element={<Signup />} />}
-            <Route path="/" element={LoggedInState ? <UserPage/> : path === "signup" ? <Signup/> : <Login/>}>
-              {/* <Route path="@me" element={<Homepage />}/> */}
-            </Route>
+            <Route path="/login" element={!LoggedInState ? <Login /> : <Navigate to='/'/>}/>
+            <Route path="/signup" element={!LoggedInState ? <Signup /> : <Navigate to='/'/>}/>
+            <Route exact path="/" element={LoggedInState ? <HomePage/> : path === "signup" ? <Signup/> : <Login/>}/>
+            <Route path="/channels/:id" element={<UserPage/>}/>
           </Routes>
           </Suspense>
         </ErrorBoundary>

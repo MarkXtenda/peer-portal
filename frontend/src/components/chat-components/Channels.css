@@ -8,8 +8,13 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+
+  .channel-list li a {
+    text-decoration: none;
+    color: black;
+  }
   
-  .channel-list a {
+  .channel-list div {
     display: block;
     padding: 10px;
     color: #333;

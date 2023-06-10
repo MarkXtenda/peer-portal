@@ -4,7 +4,9 @@
     display: flex;
     width: 100vw;
     height: 10vh;
+    padding: 10px 0;
     background-color: hsla(0, 0%, 100%, 0.4);
+    align-items: center;
     backdrop-filter: blur(2px);
 }
 
