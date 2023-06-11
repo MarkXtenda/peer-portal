@@ -35,13 +35,14 @@ function UpdateChannel() {
         <div className="form-container">
           <img
             className="img-avatar"
-            src={image ? URL.createObjectURL(image) : avatarData.image ? avatarData.image : DEFAULT_CHANNEL_URL}
+            src={image ? URL.createObjectURL(image) : channelData.image ? channelData.image : DEFAULT_CHANNEL_URL}
             alt="user avatar"
           />
         </div>
         <label>Channel Image</label>
         <div className="file-input-container">
           <input
+            className='file-input'
             type="file"
             accept="image/*"
             multiple={false}

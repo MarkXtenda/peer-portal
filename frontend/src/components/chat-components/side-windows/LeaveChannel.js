@@ -5,13 +5,17 @@ import { settingsTogleAction } from '../../features/settings/SettingsSlice'
 import { userDataSelector } from '../../features/user/userSelector'
 import { channelChosenSelector } from '../../features/channel/ChannelSelectors'
 import { removeUser } from '../../features/user/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 function LeaveChannel() {
   const dispatch = useDispatch()
   const channel = useSelector(channelChosenSelector)
   const userData = useSelector(userDataSelector)
+  const navigate = useNavigate();
+  
   function handleLeaveChannel() {
     dispatch(removeUser(userData.id, channel.id));
+    navigate('/', { replace: true });
   }
   function handleNo() {
     dispatch(settingsTogleAction("leaveChannel"))

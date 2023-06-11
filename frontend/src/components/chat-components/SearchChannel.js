@@ -19,14 +19,14 @@ function SearchChannel() {
         <div id="search">
             <p>Search Results:</p><br/>
             {channelSearchResult && channelSearchResult.map(({id,image, name})=>
-            <div onClick={()=>handleAddUserChannel(id)} key={id}>
-                <img src={image ? image : logo} style={{height: "50px", width: "50px"}}/>
-                <p>{name}</p>
-            </div>
-            // <Link to={"/channel/"+id} onClick={()=>clearSearch([])} key={id}>
+            // <div onClick={()=>handleAddUserChannel(id)} key={id}>
             //     <img src={image ? image : logo} style={{height: "50px", width: "50px"}}/>
             //     <p>{name}</p>
-            // </Link>
+            // </div>
+            <Link to={"/channels/"+id} onClick={()=>handleAddUserChannel(id)} key={id}>
+                <img src={image ? image : logo} style={{height: "50px", width: "50px"}}/>
+                <p>{name}</p>
+            </Link>
             )}
         <button onClick={()=>dispatch(clearSearch([]))}>X</button>
         </div>

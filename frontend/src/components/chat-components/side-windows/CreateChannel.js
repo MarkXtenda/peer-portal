@@ -26,7 +26,7 @@ function CreateChannel() {
   }
   
   return (
-    <div id='setting'> 
+    <div id='setting-createChannel'> 
       <div id="createChannel" className='default' onClick={()=>dispatch(settingsTogleAction("createChannel"))}>
         <span></span>
         <span></span>

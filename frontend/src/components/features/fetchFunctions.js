@@ -106,7 +106,7 @@ export function fetchChannelSearch(name) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(name[0] === "#" ? {"invitekey": name} : {"name": name})
+    body: JSON.stringify(name[0] === "#" ? {"invitekey": name.slice(1)} : {"name": name})
   })
   .then((r) => {
     if (r.ok) {
