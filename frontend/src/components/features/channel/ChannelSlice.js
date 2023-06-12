@@ -1,10 +1,10 @@
-import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel, fetchOneChannel } from '../fetchFunctions';
+import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel, fetchOneChannel, fetchMessages, fetchRemoveUser } from '../fetchFunctions';
 import { settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialState = {
   channelCurrent: "default",
   channels: [],
-  searchedChannels: []
+  searchedChannels: [],
 };
 
 export const chooseChannel = (channel) => {
@@ -23,6 +23,7 @@ export default function channelReducer(state = initialState, action) {
         // if (action.payload !== choosenChannel) {
         //   choosenChannel = state.channels.find(element => element.name === action.payload.name)
         // }
+        // getMessages(channelId)
         return { ...state, channelCurrent: action.payload };
       case "channel/search":
         return {...state, searchedChannels: action.payload};
@@ -41,7 +42,13 @@ export default function channelReducer(state = initialState, action) {
           updatedChannels[updatedChannelIndex] = action.payload;
           return { ...state, channels: updatedChannels };
         }
-        return state;
+      case "channel/userRemoved":
+        console.log(action.payload)
+        const updatedUserRemovedChannelIndex = state.channels.findIndex((channel) => channel.id === action.payload.id);
+        updatedChannels[updatedUserRemovedChannelIndex] = action.payload
+        console.log(updatedChannels)
+        // return {...state, channels: updatedChannels}
+
       // case "channel/userRemoved":
       //   if (action.payload) {
       //     const removedUserArray = state.channelCurrent
@@ -134,3 +141,25 @@ export function getOneChannel(channelId) {
   };
 }
 
+export function getMessages(channelId) {
+  return async function() {
+    try {
+      await fetchMessages(channelId);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
+}
+
+export function removeUserAsAdmin(userId, channelId) {
+  return async function(dispatch) {
+    try {
+      const removedUserChannel = await fetchRemoveUser(userId, channelId);
+      dispatch(settingsTogleAction("default"))
+      dispatch({ type: "channel/userRemoved", payload: removedUserChannel })
+    } catch (err) {
+      dispatch({ type: "user/error", payload: err });
+    }
+  };
+}

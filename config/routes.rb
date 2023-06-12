@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/find_channel', to: 'channels#find_channel'
   # get '/channel_users/[:id]', to: 'channels#channel_users' - currently unused?
   get '/me', to: 'sessions#show'
+  post '/channel_messages', to: 'messages#channel_messages'
 
   # testing
   get '/avatars', to: 'avatars#show'

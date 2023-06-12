@@ -26,7 +26,7 @@ function UpdateChannel() {
   };
 
   return (
-    <div id='setting'>
+    <div className='setting-channel-options'>
       <div className="default" id='updateChannel' onClick={()=>dispatch(settingsTogleAction("updateChannel"))}>
         <span></span>
         <span></span>

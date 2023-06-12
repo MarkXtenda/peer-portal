@@ -1,24 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Settings.css";
-import { channelChosenSelector } from "../../features/channel/ChannelSelectors";
-import { removeUser } from "../../features/user/userSlice";
+import { channelChosenAdminSelector, channelChosenSelector, channelChosenUsersSelector } from "../../features/channel/ChannelSelectors";
+import { removeUserAsAdmin } from "../../features/channel/ChannelSlice";
 import { settingsTogleAction } from "../../features/settings/SettingsSlice";
 import { userDataSelector } from "../../features/user/userSelector";
 import { DEFAULT_AVATAR_URL } from "../../features/constants";
 
 function RemoveUser() {
   const dispatch = useDispatch();
-  const channelUsers = useSelector((state) => state.channel.channelCurrent.users_info); // not a function yet...
+  const channelCurrentAdmin = useSelector(channelChosenAdminSelector)
+  const channelUsers = useSelector(channelChosenUsersSelector); // not a function yet...
   const channel = useSelector(channelChosenSelector)
   const userData = useSelector(userDataSelector)
 
-  useEffect(() => {
-    // Fetch channel users or update the channelUsers state with the appropriate data
-  }, []);
 
   function handleUserRemove(userId) {
-    dispatch(removeUser(userId, channel.id));
+    dispatch(removeUserAsAdmin(userId, channel.id));
   }
 
   return (
@@ -35,11 +33,16 @@ function RemoveUser() {
           <div key={user.id} id={user.id} className="user-item">
             <img alt="" src={user.avatar ? user.avatar : DEFAULT_AVATAR_URL} className="avatar" />
             <span className="username">{user.username}</span>
-            {user.username === userData.username
+            {user.id === channelCurrentAdmin
             ?
             <button className="admin-remove-button" disabled>Admin</button>
             :
+            channelCurrentAdmin === userData.id 
+            ? 
             <button onClick={() => handleUserRemove(user.id)} className="user-remove-button">Remove</button>
+            :
+            <button className="user-remove-button-hidden">Remove</button>
+
             }
           </div>
         ))}

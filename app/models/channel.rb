@@ -4,7 +4,6 @@ class Channel < ApplicationRecord
   has_one_attached :image
   
   validates :name, presence: true, uniqueness: true
-  validates :description, presence: true
   validates :invitekey, uniqueness: true, allow_nil: true
 
   before_validation :set_invitekey, if: -> { private? && invitekey.to_s.empty? }

@@ -5,49 +5,54 @@ import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 import './Messages.css';
 import {DEFAULT_AVATAR_URL} from '../features/constants'
+import { useLocation } from 'react-router-dom';
+import { getMessages } from '../features/channel/ChannelSlice';
+// import { getMessages } from '../features/channel/ChannelSlice';
 
 const Messages = () => {
-  const bottomEl = useRef(null);
   const [messages, setMessages] = useState(new Array());
   const chosenChannelState = useSelector(channelChosenSelector)
+  const location = useLocation()
+  const path = location.pathname.split('/')[1]
+  const channelIdPath = location.pathname.split('/')[2]
+  const messageListRef = useRef(null);
 
-  const scrollToBottom = () => {
-    bottomEl?.current?.scrollIntoView();
-  };
   // ActionCable useEffect - realtime messaging data
   useEffect(() => {
     const channel = cable.subscriptions.create(
-      { channel: "ChatChannel", channel_id: chosenChannelState.id },
+      { channel: "MessagesChannel", channel_id: chosenChannelState.id },
       {
-        connected: () => console.log('connected'),
+        connected: () => {console.log("connected")},
         disconnected: () => console.log('disconnected'),
-        // !!! Need some work on handling created array
         received: data => {
-          if (data !== messages) {
-            scrollToBottom()
-          }
           if (data) {
-            if (data.messages.length === 0 || data.messages.length >= 1) {
-              // if the new array loaded from a start display it
-              setMessages(data.messages);
-            }
-            else {
-              // if message was created add it to array
-              setMessages(messages => [...messages, ...data.messages]);
-            }
+            setMessages(data.messages);
           }
         }
       }
     );
-    return () => channel.unsubscribe();
-  }, [chosenChannelState, setMessages, messages]);
-  
+    if (path !== "channels") {
+      return () => channel.unsubscribe();
+    }
+  }, [cable, chosenChannelState, setMessages, messages]);
+
   useEffect(()=>{
-    scrollToBottom()
-  },[]);
-  
+    fetch("/channel_messages", {
+      method: "POST",
+      body: JSON.stringify({"channel_id": chosenChannelState.id}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((r) => r.json()).then(data=>setMessages(data))
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+  },[chosenChannelState]);
+
   return(
-    <div className="message-list">
+    <div className="message-list" ref={messageListRef}>
     {messages.length !== 0 &&
       messages.map((message, index) => (
         <div key={index} className="message-container">
@@ -59,14 +64,13 @@ const Messages = () => {
           <div className="message">
             <div className="header">
               <span className="username">{message.creator}</span>
-              <span className="timestamp">{message.created_at}</span>
+              <span className="timestamp">{message.created_at.split("T0")[1].split(".")[0]} {message.created_at.split("T0")[0]}</span>
             </div>
             <div className="message-content">{message.content}</div>
             {message.image ? <img src={message.image} alt='message image'/> : null}
           </div>
         </div>
       ))}
-      <div className="refee" ref={bottomEl}></div>
   </div>
   );
 };

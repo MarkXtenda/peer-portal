@@ -21,7 +21,7 @@ function DeleteChannel() {
   }
 
   return (
-    <div id='setting'>
+    <div className='setting-channel-options'>
       <div id="deleteChannel" className='default' onClick={handleNo}>
         <span></span>
         <span></span>

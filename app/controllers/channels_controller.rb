@@ -47,7 +47,7 @@ class ChannelsController < ApplicationController
   # Channel update
   def update
     # channel = Channel.find(params[:id])
-    if @channel.user_id === current_user.id && @channel.update(name: params[:name], description: params[:description], image: params[:image])
+    if @channel.user_id === current_user.id && @channel.update(create_channel_params)
       render json: @channel
     else
       render json: @channel.errors, status: :unprocessable_entity

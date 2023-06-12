@@ -6,7 +6,6 @@ export const cable = ActionCable.createConsumer(cableUrl);
 export function connect(channel, callbacks) {
   const cableUrl = 'ws://localhost:3000/cable';
   const cable = ActionCable.createConsumer(cableUrl);
-  // cable = ActionCable.createConsumer('/cable');
   cable.subscriptions.create({ channel: channel }, callbacks);
 }
 

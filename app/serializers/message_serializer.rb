@@ -1,5 +1,5 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :content, :image, :channel_id, :creator, :user_id, :url
+  attributes :id, :content, :image, :channel_id, :creator, :user_id, :url, :created_at
   include Rails.application.routes.url_helpers
 
   def url

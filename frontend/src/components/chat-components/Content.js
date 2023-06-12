@@ -6,7 +6,7 @@ import Messages from './Messages';
 import { userDataSelector } from '../features/user/userSelector';
 import { settingsHideMenuAction } from '../features/settings/SettingsSlice';
 import { settingsTogleAction } from '../features/settings/SettingsSlice';
-import logo from "./logo.svg"
+import { DEFAULT_CHANNEL_URL } from '../features/constants';
 import MessageForm from './user-page-components/MessageForm';
 import "./Content.css"
 
@@ -22,7 +22,7 @@ function Content() {
           <div className='channel-image-div' style={{textAlignLast: "center"}} >
           <img 
           style={{height: "100px", width: "100px", borderRadius: "50%"}} 
-          src={chosenChannelState.image ? chosenChannelState.image : logo} />
+          src={chosenChannelState.image ? chosenChannelState.image : DEFAULT_CHANNEL_URL} />
           </div>
           <h1 id='channel-name'>{chosenChannelState.name}</h1>
           <div className='channel-settings'>

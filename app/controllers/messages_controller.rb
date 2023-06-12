@@ -14,7 +14,10 @@ class MessagesController < ApplicationController
       # channel_name = "messages_channel"
       # Action cable to return a single message 
       # ActionCable.server.broadcast "public_chat", {messages: @message}
-      ActionCable.server.broadcast 'public_chat', {messages: Message.where(channel_id: params[:channel_id])}
+      channel_id = params[:channel_id]
+      channel_chat = Message.where(channel_id: params[:channel_id])
+      serialized_messages = ActiveModel::Serializer::CollectionSerializer.new(channel_chat, serializer: MessageSerializer)
+      ActionCable.server.broadcast "MessagesChannel_#{channel_id}", {messages: serialized_messages}
     else
       render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
     end
@@ -23,7 +26,17 @@ class MessagesController < ApplicationController
   def index
     @channel = Channel.find(params[:channel_id])
     @messages = @channel.messages
-    render json: @messages
+    # channel_id = params[:channel_id]
+    # ActionCable.server.broadcast `MessagesChannel_#{channel_id}`, {messages: @messages}
+    # render json: {messages: @messages}
+  end
+
+  def channel_messages
+    # channel_id = params[:channel_id]
+    # ActionCable.server.broadcast "MessagesChannel_#{channel_id}", {messages: Message.where(channel_id: params[:channel_id])}
+    # @channel = Channel.find(params[:channel_id])
+    # @messages = @channel.messages
+    render json: Message.where(channel_id: params[:channel_id])
   end
 
   private

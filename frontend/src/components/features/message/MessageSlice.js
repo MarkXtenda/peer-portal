@@ -1,9 +1,6 @@
 const initialState = {
     channelName: "default",
-    messages: [
-      {name: "Group 1", message: "Hello Group 1"},
-      {name: "Group 2", message: "Hello Group 2"},
-      {name: "Group 3", message: "Hello Group 3"}]
+    messages: []
   };
 
 export const loadMessages = (source) => {
@@ -22,7 +19,7 @@ export const loadMessages = (source) => {
 export default function messageReducer(state = initialState, action) {
     switch (action.type) {
         case "/messages/load":
-          return { ...state, channelName: action.payload };
+          return { ...state, messages: action.payload };
         case "/messages/send":
           const addChannelArray = state.channels.push(action.payload)
           return {...state, channels: addChannelArray}

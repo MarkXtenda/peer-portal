@@ -83,6 +83,21 @@ export function fetchAvatar(formData) {
   });
 }
 
+export function fetchMessages(channelId) {
+  return fetch("/channel_messages", {
+    method: "POST",
+    body: JSON.stringify({"channel_id": channelId}),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((r) => r.json()).then(data=>{return data})
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
 export function fetchSendMessage(channelId, messageData) {
   return fetch(`/channels/${channelId}/messages`, {
     method: "POST",
@@ -106,7 +121,7 @@ export function fetchChannelSearch(name) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(name[0] === "#" ? {"invitekey": name.slice(1)} : {"name": name})
+    body: JSON.stringify(name[0] === "#" ? {"invitekey": name} : {"name": name})
   })
   .then((r) => {
     if (r.ok) {

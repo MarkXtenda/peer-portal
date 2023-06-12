@@ -21,7 +21,7 @@ function LeaveChannel() {
     dispatch(settingsTogleAction("leaveChannel"))
   }
   return (
-    <div id='setting'>
+    <div className='setting-channel-options'>
       <div id="leaveChannel" className='default' onClick={handleNo}>
         <span></span>
         <span></span>

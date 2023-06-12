@@ -105,8 +105,8 @@ export function removeUser(userId, channelId) {
       const removedUserChannel = await fetchRemoveUser(userId, channelId);
       dispatch(chooseChannel("default"))
       dispatch(settingsTogleAction("default"))
-      dispatch({ type: "channel/delete", payload: removedUserChannel.channel_id })
-      dispatch({ type: "user/channels/remove", payload: removedUserChannel.channel_id})
+      dispatch({ type: "channel/delete", payload: removedUserChannel.id })
+      dispatch({ type: "user/channels/remove", payload: removedUserChannel.id})
     } catch (err) {
       dispatch({ type: "user/error", payload: err });
     }

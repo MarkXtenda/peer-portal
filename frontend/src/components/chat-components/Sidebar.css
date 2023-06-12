@@ -49,6 +49,16 @@
     padding: 1rem;
 }
 
+.channel-list {
+    overflow-y: auto;
+    height: 75vh;
+    scroll-behavior: smooth;
+}
+
+.channel-list::-webkit-scrollbar {
+    display: none; /* Hide the scroll bar */
+  }
+
 .sidebar-groups ul {
     margin: 0;
     padding: 0;

@@ -1,12 +1,13 @@
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
     channel_id = params[:channel_id]
-    # channel_name = "messages_channel_#{channel_id}"
-    channel_name = "messages_channel"
-    stream_from channel_name
+    # channel_chat = Message.where(channel_id: params[:channel_id])
+    # serialized_messages = ActiveModel::Serializer::CollectionSerializer.new(channel_chat, serializer: MessageSerializer)
+    # transmit({ messages: serialized_messages })
+    stream_from "MessagesChannel_#{channel_id}"
   end
 
   def unsubscribed
-    # Cleanup needed when channel is unsubscribed
   end
 end
+

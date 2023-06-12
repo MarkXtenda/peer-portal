@@ -5,15 +5,20 @@ import { settingsTogleAction } from '../../features/settings/SettingsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { userDataSelector } from '../../features/user/userSelector'
 import { addChannel } from '../../features/channel/ChannelSlice';
+import { useNavigate } from 'react-router-dom'
+import { channelChosenSelector } from '../../features/channel/ChannelSelectors'
 
 function CreateChannel() {
   const userData = useSelector(userDataSelector);
+  const currentCreatedChannel = useSelector(channelChosenSelector)
   const [image, setImage] = useState("");
   const [channelName, setChannelName] = useState("");
   const [channelDescription, setChannelDescription] = useState("");
   const [channelPrivate, setChannelPrivate] = useState(false)
   const [channelInvitekey, setChannelInvitekey] = useState("")
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData()
@@ -21,8 +26,9 @@ function CreateChannel() {
     formData.append("name", channelName)
     formData.append("description", channelDescription)
     formData.append("private", channelPrivate)
-    formData.append("invitekey", channelInvitekey)
+    if (channelInvitekey.length) formData.append("invitekey", "#"+channelInvitekey);
     dispatch(addChannel(formData));
+    navigate(`/channels/${currentCreatedChannel.id}`, { replace: true });
   }
   
   return (

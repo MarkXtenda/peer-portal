@@ -14,7 +14,8 @@ class MembersController < ApplicationController
         membership = Member.find_by(user_id: params[:user_id], channel_id: params[:channel_id])
         if membership
             membership.destroy
-            render json: {message: 'User Left the group', channel_id: params[:channel_id]}
+            channel = Channel.find(params[:channel_id])
+            render json: channel, serializer: ChannelSerializer, status: 200
         else
             render json: { error: "A non-member" }, status: :unprocessable_entity
         end

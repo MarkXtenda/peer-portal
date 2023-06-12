@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import logo from "./logo.svg"
+import { DEFAULT_CHANNEL_URL } from '../features/constants';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {chooseChannel} from "../features/channel/ChannelSlice"
@@ -31,8 +31,8 @@ function Channels() {
               {state.length !== 0 && state.map((channel, index)=>
               <li style={{height: "50px"}} key={index} className={channel.name === chosenChannelState.name ? "chosen" : null}>
                 <Link to={`/channels/${channel.id}`} onClick={(e)=>handleChannelClick(e, channel)}>
-                  <img style={{height: "50px", width: "50px", borderRadius: "50%", float: "left"}} src={channel.image ? channel.image : logo}></img>
-                  <div key={index+1} name={channel.name}>{handleLongStrings(channel.name)}</div>
+                  <img style={{height: "50px", width: "50px", borderRadius: "50%", float: "left"}} src={channel.image ? channel.image : DEFAULT_CHANNEL_URL}></img>
+                  <div key={index+1} className="chanel-name">{handleLongStrings(channel.name)}</div>
                 </Link>
               </li>
               )}

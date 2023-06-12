@@ -19,16 +19,25 @@ function MessageForm() {
     if (image !== null) {
       formData.append('image', image);
       formData.append('content', content);
-    } 
-    else if (content !== "") {
-      formData.append('content', content);
       formData.append('channel_id', chosenChannelState.id);
       formData.append('user_id', userState.id);
       formData.append('creator', userState.username);
       setContent('');
       setImage(null);
       dispatch(sendMessage(chosenChannelState.id, formData));
+    } 
+    else {
+      if (content !== "") {
+        formData.append('content', content);
+        formData.append('channel_id', chosenChannelState.id);
+        formData.append('user_id', userState.id);
+        formData.append('creator', userState.username);
+        setContent('');
+        setImage(null);
+        dispatch(sendMessage(chosenChannelState.id, formData));
+      }
     }
+
   }
 
   return (
