@@ -4,6 +4,7 @@ class MembersController < ApplicationController
         if !membership
             membership = Member.create(member_params)
             channel = Channel.find(params[:channel_id])
+            # ActionCable.server.broadcast "MessagesChannel_#{params[:channel_id]}", {channel: channel}
             render json: channel, serializer: ChannelSerializer, status: :created
         else
             render json: { error: "Already a member" }, status: :unprocessable_entity
@@ -15,6 +16,7 @@ class MembersController < ApplicationController
         if membership
             membership.destroy
             channel = Channel.find(params[:channel_id])
+            # ActionCable.server.broadcast "MessagesChannel_#{params[:channel_id]}", {channel: channel}
             render json: channel, serializer: ChannelSerializer, status: 200
         else
             render json: { error: "A non-member" }, status: :unprocessable_entity

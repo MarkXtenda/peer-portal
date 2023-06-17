@@ -1,12 +1,12 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :channels
+  attributes :id, :username, :channels, :avatar
   
   def channels
     self.object.channels
   end
 
   def avatar
-    if object.avatar&.attached?
+    if object.avatar
       ActiveModelSerializers::SerializableResource.new(object.avatar, serializer: AvatarSerializer).as_json
     end
   end

@@ -78,6 +78,7 @@ export function changeAvatarUser(formData) {
   return async function(dispatch) {
     try {
       const avatar = await fetchAvatar(formData);
+      dispatch(settingsTogleAction("settings"))
       dispatch({ type: "user/avatar", payload: avatar});
     } catch (err) {
       dispatch({type: "user/error", payload: err})

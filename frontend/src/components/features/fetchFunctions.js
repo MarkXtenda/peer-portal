@@ -253,7 +253,7 @@ export function fetchOneChannel(channelId) {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to load Channels");
+        throw new Error("Unable to load Channel");
       }
     })
     .catch((error) => {

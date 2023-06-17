@@ -20,7 +20,7 @@ function RemoveUser() {
   }
 
   return (
-    <div id="setting">
+    <div className="more-channel-options">
       <div id="removeChannel" className="default" onClick={()=>dispatch(settingsTogleAction("removeChannel"))}>
         <span></span>
         <span></span>

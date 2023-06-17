@@ -12,6 +12,7 @@ import RemoveUser from './side-windows/RemoveUser';
 import { motion } from 'framer-motion';
 import { toggleVariants } from '../features/animationVariants';
 import "./Sidebar.css"
+import DescriptionChannel from './side-windows/DescriptionChannel';
 
 function Sidebar() {
   const toggle = useSelector(settingsTogleSelector)
@@ -56,6 +57,7 @@ function Sidebar() {
               {toggle === 'deleteChannel' && <DeleteChannel />}
               {toggle === 'leaveChannel' && <LeaveChannel />}
               {toggle === 'usersChannel' && <RemoveUser />}
+              {toggle === 'descriptionChannel' && <DescriptionChannel/>}
             </motion.div>
         </div>
   )

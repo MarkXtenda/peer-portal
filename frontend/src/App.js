@@ -38,7 +38,8 @@ function App() {
 
   const ErrorFallback=({error,resetErrorBoundary})=>{
     console.log(error)
-    return (<>
+    return (
+    <>
         <img src='https://i.imgur.com/lKJiT77.png'/>
         <h1>Sorry this page is broken</h1>   
         <button onClick={resetErrorBoundary}>Try again</button>
@@ -69,7 +70,7 @@ function App() {
             <Route path="/login" element={!LoggedInState ? <Login /> : <Navigate to='/'/>}/>
             <Route path="/signup" element={!LoggedInState ? <Signup /> : <Navigate to='/'/>}/>
             <Route exact path="/" element={LoggedInState ? <HomePage/> : path === "signup" ? <Signup/> : <Login/>}/>
-            <Route path="/channels/:id" element={<UserPage/>}/>
+            <Route path="/channels/:id" element={<UserPage channelId={channelIdPath} />}/>
           </Routes>
           </Suspense>
         </ErrorBoundary>

@@ -20,4 +20,59 @@
   .content::-webkit-scrollbar {
     display: none; /* Hide the scroll bar */
   }
+
+  .channel-options {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .updateChannel, .leaveChannel, .joinChannel, .deleteChannel {
+    margin-top: 10px;
+    background-color: #0088cc;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .leaveChannel, .joinChannel, .deleteChannel {
+    margin: 0 10px;
+  }
+
+  #users-desc-options {
+    display: flex;
+    grid-auto-columns: auto;
+    flex-direction: column;
+    height: 25px;
+    width: 15px;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  #users-desc-options span {
+    font-size: x-large;
+    height: 5px;
+  }
+
+#users-desc-options-clicked {
+  visibility: collapse;
+  background-color: #f8f9fa;
+  border: 1px solid lightgrey;
+  margin-top: 0px;
+  border-radius: 5%;
+}
+
+#users-desc-options-clicked div {
+  padding: 2.5px;
+}
+
+#users-desc-options-clicked div:hover {
+  padding: 2.5px;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
   

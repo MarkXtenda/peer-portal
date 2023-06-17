@@ -19,11 +19,6 @@ export default function channelReducer(state = initialState, action) {
       case "channel/load":
         return { ...state, channels: action.payload}
       case "channel/choose":
-        // let choosenChannel = "default"
-        // if (action.payload !== choosenChannel) {
-        //   choosenChannel = state.channels.find(element => element.name === action.payload.name)
-        // }
-        // getMessages(channelId)
         return { ...state, channelCurrent: action.payload };
       case "channel/search":
         return {...state, searchedChannels: action.payload};
@@ -35,7 +30,6 @@ export default function channelReducer(state = initialState, action) {
         const updatedChannels = state.channels.filter(channel => channel.id !== action.payload);
         return { ...state, channels: updatedChannels };
       case "channel/update":
-        // ATTENTION NEEDED
         const updatedChannelIndex = state.channels.findIndex((channel) => channel.id === action.payload.id);
         if (updatedChannelIndex !== -1) {
           const updatedChannels = [...state.channels];
@@ -45,9 +39,12 @@ export default function channelReducer(state = initialState, action) {
       case "channel/userRemoved":
         console.log(action.payload)
         const updatedUserRemovedChannelIndex = state.channels.findIndex((channel) => channel.id === action.payload.id);
-        updatedChannels[updatedUserRemovedChannelIndex] = action.payload
-        console.log(updatedChannels)
-        // return {...state, channels: updatedChannels}
+        console.log(updatedUserRemovedChannelIndex)
+        const updatedRemovedChannels = [...state.channels]
+        console.log(updatedRemovedChannels)
+        updatedRemovedChannels[updatedUserRemovedChannelIndex] = action.payload
+        console.log(updatedRemovedChannels)
+        return {...state, channels: updatedRemovedChannels, channelCurrent: action.payload}
 
       // case "channel/userRemoved":
       //   if (action.payload) {
@@ -159,7 +156,7 @@ export function removeUserAsAdmin(userId, channelId) {
       dispatch(settingsTogleAction("default"))
       dispatch({ type: "channel/userRemoved", payload: removedUserChannel })
     } catch (err) {
-      dispatch({ type: "user/error", payload: err });
+      console.log(err)
     }
   };
 }
