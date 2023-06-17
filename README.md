@@ -1,5 +1,24 @@
 # README
 
-To start application head to frontend folder: `cd frontend`
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-Anp start `npm`: `npm start`
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
