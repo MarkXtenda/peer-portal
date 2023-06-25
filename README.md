@@ -1,8 +1,8 @@
 
 # Peer-Portal
-
-![](https://github.com/peer-portal/vid.gif)
-
+<p align="center">
+<img src="https://github.com/MarkXtenda/peer-portal/blob/main/vid.gif?raw=true" />
+</p>
 This is a chat application built using Ruby on Rails with the help of ActionCable, ActiveStorage, React, and Redux. 
 
 ## Description
