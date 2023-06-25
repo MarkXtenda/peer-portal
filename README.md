@@ -1,6 +1,8 @@
 
 # Peer-Portal
 
+![](https://github.com/peer-portal/vid.gif)
+
 This is a chat application built using Ruby on Rails with the help of ActionCable, ActiveStorage, React, and Redux. 
 
 ## Description
