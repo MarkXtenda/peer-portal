@@ -1,0 +1,11 @@
+.error-box {
+    position: absolute;
+    left: 360px;
+    top: 30px;
+    display: flex;
+    width: 30vh;
+    height: 10vh;
+    background: indianred;
+    border: 2px solid darkred;
+    border-radius: 5px;
+}

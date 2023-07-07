@@ -27,7 +27,7 @@ export default function userReducer(state = initialStateUser, action) {
         case "user/login":
           return {...state, isLoggedIn: true, user: action.payload, error: null };
         case "user/error":
-          return {...state, isLoggedIn: false, user: null, error: action.payload };
+          return {...state, isLoggedIn: false, user: null, error: action.payload.message };
         case "user/logout":
           return {...state, isLoggedIn: false, user: null,  error: null };
         case "user/avatar":
@@ -89,9 +89,7 @@ export function changeAvatarUser(formData) {
 export function sendMessage(channelId, messageData) {
   return async function() {
     try {
-      console.log("sending message...", channelId, messageData);
       await fetchSendMessage(channelId, messageData);
-      console.log("message sent successfully");
     }
     catch (err) {
       console.log(err)

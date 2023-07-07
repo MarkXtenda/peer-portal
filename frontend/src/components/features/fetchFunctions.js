@@ -15,13 +15,16 @@ export function fetchLogin(email, password) {
         if (r.ok) {
           return r.json();
         } else {
-          throw new Error("Unable to login");
+          // Nice solution to the error handling :)
+          return r.json().then((errorData) => {
+            throw new Error(errorData.error);
+          });
         }
       })
-      .catch((error) => {
-        console.error(error);
-        throw error;
-      });
+      // .catch((error) => {
+      //   console.error(error);
+      //   throw error;
+      // });
   }
 
 export function fetchChannels() {

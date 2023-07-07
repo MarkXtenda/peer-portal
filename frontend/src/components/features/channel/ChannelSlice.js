@@ -45,15 +45,9 @@ export default function channelReducer(state = initialState, action) {
         updatedRemovedChannels[updatedUserRemovedChannelIndex] = action.payload
         console.log(updatedRemovedChannels)
         return {...state, channels: updatedRemovedChannels, channelCurrent: action.payload}
-
-      // case "channel/userRemoved":
-      //   if (action.payload) {
-      //     const removedUserArray = state.channelCurrent
-      //     removedUserArray.users_info.filter((user)=>user.username !== action.payload)
-      //     return { ...state, channels: updatedChannels };
-      //   }
       case "channel/error":
-        return {...state, error: action.payload}  
+        console.log(action.payload)
+        return {...state, error: action.payload.message}  
       default:
         return state;
       }
