@@ -1,4 +1,5 @@
 import { chooseChannel } from '../channel/ChannelSlice';
+import { setErrors } from '../errors/errorsSlice';
 import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser, fetchJoinChannel} from '../fetchFunctions';
 import { settingsHideMenuAction, settingsTogleAction } from '../settings/SettingsSlice';
 
@@ -56,8 +57,9 @@ export function loginUser(email, password) {
         const user = await fetchLogin(email, password);
         dispatch(settingsHideMenuAction())
         dispatch({ type: "user/login", payload: user });
-      } catch (err) {
-        dispatch({ type: "user/error", payload: err });
+      }
+      catch (err) {
+        dispatch(setErrors(err));
       }
     };
   }
@@ -69,7 +71,7 @@ export function logoutUser() {
       dispatch({ type: "user/logout", payload: null });
       dispatch(chooseChannel("default"))
     } catch (err) {
-      dispatch({ type: "user/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -81,7 +83,7 @@ export function changeAvatarUser(formData) {
       dispatch(settingsTogleAction("settings"))
       dispatch({ type: "user/avatar", payload: avatar});
     } catch (err) {
-      dispatch({type: "user/error", payload: err})
+      dispatch(setErrors(err));
     }
   }
 }
@@ -104,10 +106,11 @@ export function removeUser(userId, channelId) {
       const removedUserChannel = await fetchRemoveUser(userId, channelId);
       dispatch(chooseChannel("default"))
       dispatch(settingsTogleAction("default"))
+      // ATTENTION
       dispatch({ type: "channel/delete", payload: removedUserChannel.id })
       dispatch({ type: "user/channels/remove", payload: removedUserChannel.id})
     } catch (err) {
-      dispatch({ type: "user/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -121,7 +124,7 @@ export function addUser(userId, channelId) {
       dispatch({ type: "channel/add", payload: addededUserChannel })
       dispatch({ type: "user/channels/add", payload: addededUserChannel})
     } catch (err) {
-      dispatch({ type: "user/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }

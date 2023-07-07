@@ -85,7 +85,6 @@ label {
 }
 
 button[type="submit"] {
-    margin: 0 10px;
     margin-top: 10px;
     background-color: #0088cc;
     color: #fff;

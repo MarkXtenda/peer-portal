@@ -1,3 +1,4 @@
+import { setErrors } from '../errors/errorsSlice';
 import { fetchChannels, fetchChannelSearch, fetchDeleteChannel, fetchUpdateChannel, fetchCreateChannel, fetchOneChannel, fetchMessages, fetchRemoveUser } from '../fetchFunctions';
 import { settingsTogleAction } from '../settings/SettingsSlice';
 
@@ -59,7 +60,7 @@ export function showChannels() {
       const channels = await fetchChannels();
       dispatch({ type: "channel/load", payload: channels });
     } catch (err) {
-      dispatch({ type: "channel/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -70,7 +71,7 @@ export function searchChanels(name) {
       const searchResult = await fetchChannelSearch(name);
       dispatch({ type: "channel/search", payload: searchResult});
     } catch (err) {
-      dispatch({type: "channel/error", payload: err})
+      dispatch(setErrors(err));
     }
   }
 }
@@ -87,7 +88,7 @@ export function deleteChannel(channelId) {
       dispatch({ type: "channel/delete", payload: deletedChannelId });
       dispatch(chooseChannel("default"))
     } catch (err) {
-      dispatch({ type: "channel/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -100,7 +101,7 @@ export const updateChannel = (channelId, channelData) => {
       dispatch(chooseChannel(updatedChannel))
       dispatch(settingsTogleAction("default"))
     } catch (err) {
-      console.log(err)
+      dispatch(setErrors(err));
       // dispatch({ type: "channel/error", payload: err });
     }
   };
@@ -115,7 +116,7 @@ export function addChannel(channelData) {
       dispatch(chooseChannel(createdChannel))
       dispatch(settingsTogleAction("default"))
     } catch (err) {
-      dispatch({ type: "channel/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -127,7 +128,7 @@ export function getOneChannel(channelId) {
       dispatch(chooseChannel(channel))
       dispatch(settingsTogleAction("default"))
     } catch (err) {
-      dispatch({ type: "channel/error", payload: err });
+      dispatch(setErrors(err));
     }
   };
 }
@@ -150,7 +151,7 @@ export function removeUserAsAdmin(userId, channelId) {
       dispatch(settingsTogleAction("default"))
       dispatch({ type: "channel/userRemoved", payload: removedUserChannel })
     } catch (err) {
-      console.log(err)
+      dispatch(setErrors(err));
     }
   };
 }

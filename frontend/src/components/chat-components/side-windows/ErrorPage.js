@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./ErrorBox.css";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { errorsStateSelector } from '../../features/errors/errorsSelector';
+import { clearErrors } from '../../features/errors/errorsSlice';
 
 function ErrorPage() {
-    const channelError = useSelector((state) => state.channel.error)
-    const userError = useSelector((state) => state.user.error)
-    const [errors, setErrors] = useState([])
+    const errors = useSelector(errorsStateSelector)
+    const dispatch = useDispatch();
 
-    // channelError ? setErrors(channelError) : userError ? setErrors(userError) : setErrors([])
-    // console.log(errors)
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (errors.length > 0) {
+            dispatch(clearErrors());
+          }
+        }, 2500);
+    
+        return () => {
+          clearInterval(interval);
+        };
+      }, [dispatch, errors]);
+
     return(
-        <div>
-            {/* {errors.length > 0 ? errors.map((error)=><div>{error}</div>) : null} */}
+        <div className='error-box'>
+            {errors.length > 0 ? errors.map((error, index)=><div key={index} className='error-block'>{error}</div>) : null}
             </div>
     )
 }

@@ -1,0 +1,1 @@
+export const errorsStateSelector = (state) => state.errors.errors;

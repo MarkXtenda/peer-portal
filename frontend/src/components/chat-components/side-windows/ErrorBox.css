@@ -1,11 +1,24 @@
 .error-box {
-    position: absolute;
-    left: 360px;
-    top: 30px;
-    display: flex;
-    width: 30vh;
-    height: 10vh;
-    background: indianred;
-    border: 2px solid darkred;
-    border-radius: 5px;
+    position: fixed;
+    top: 3vh;
+    left: 40vw;
 }
+
+.error-block {
+    width: 250px;
+    padding: 10px;
+    background-color: indianred;
+    border: 1px solid darkred;
+    border-radius: 5px;
+    margin: 5px;
+    animation: fadeOut 2.4s linear forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+    }
+  }

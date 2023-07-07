@@ -17,7 +17,7 @@ export function fetchLogin(email, password) {
         } else {
           // Nice solution to the error handling :)
           return r.json().then((errorData) => {
-            throw new Error(errorData.error);
+            throw errorData.error;
           });
         }
       })
@@ -38,13 +38,9 @@ export function fetchChannels() {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to load Channels");
+        throw "Unable to load Channels";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
-    });
 }
 
 export function fetchLogout() {
@@ -58,12 +54,12 @@ export function fetchLogout() {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to logout");
+        throw "Unable to logout";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error
     });
 }
 
@@ -77,12 +73,12 @@ export function fetchAvatar(formData) {
     if (r.ok) {
       return r.json();
     } else {
-      throw new Error("Unable to load avatar");
+      throw "Unable to load avatar";
     }
   })
-  .catch((error) => {
-    console.error(error);
-    throw error;
+  .catch((errorData) => {
+    console.error(errorData.error);
+    throw errorData.error;
   });
 }
 
@@ -95,9 +91,9 @@ export function fetchMessages(channelId) {
     },
   })
     .then((r) => r.json()).then(data=>{return data})
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }
 
@@ -110,11 +106,11 @@ export function fetchSendMessage(channelId, messageData) {
     if (r.ok) {
       return console.log("sent succesfully");
     } else {
-      throw new Error("Unable to send a message");
+      throw "Unable to send a message";
     }
   })
-  .catch((error) => {
-    throw error;
+  .catch((errorData) => {
+    throw errorData.error;
   });
 }
 
@@ -130,12 +126,12 @@ export function fetchChannelSearch(name) {
     if (r.ok) {
       return r.json();
     } else {
-      throw new Error("Unable to search channels");
+      throw "Unable to search channels";
     }
   })
-  .catch((error) => {
-    console.error(error);
-    throw error;
+  .catch((errorData) => {
+    console.error(errorData.error);
+    throw errorData.error;
   });
 }
   
@@ -151,12 +147,12 @@ export function fetchDeleteChannel(channelId) {
       if (r.ok) {
         return id;
       } else {
-        throw new Error("Unable to delete the channel");
+        throw "Unable to delete the channel";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }
 
@@ -170,12 +166,12 @@ export function fetchUpdateChannel(channelId, channelData) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Unable to update the channel");
+        throw "Unable to update the channel";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }
 
@@ -188,12 +184,11 @@ export function fetchCreateChannel(channelData) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Unable to create the channel");
+        throw "Unable to create the channel";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      throw "Unable to create the channel";
     });
 }
 
@@ -212,12 +207,12 @@ export function fetchRemoveUser(userId, channelId) {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to remove the user");
+        throw "Unable to remove the user";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }
 
@@ -236,12 +231,12 @@ export function fetchJoinChannel(userId, channelId) {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to add the user");
+        throw "Unable to add the user";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }
 
@@ -256,11 +251,11 @@ export function fetchOneChannel(channelId) {
       if (r.ok) {
         return r.json();
       } else {
-        throw new Error("Unable to load Channel");
+        throw "Unable to load Channel";
       }
     })
-    .catch((error) => {
-      console.error(error);
-      throw error;
+    .catch((errorData) => {
+      console.error(errorData.error);
+      throw errorData.error;
     });
 }

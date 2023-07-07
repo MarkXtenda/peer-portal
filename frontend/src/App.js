@@ -11,6 +11,8 @@ import { useLocation } from 'react-router'
 import { userIsLoggedInSelector } from './components/features/user/userSelector';
 import Loading from './components/features/Loading';
 import HomePage from './components/chat-components/HomePage';
+import { setErrors } from './components/features/errors/errorsSlice';
+import ErrorPage from './components/chat-components/side-windows/ErrorPage';
 
 // rfce 
 function App() {
@@ -32,6 +34,7 @@ function App() {
       }
       else {
         setIsLoading(false)
+        r.json().then((err)=> dispatch(setErrors(err.error)))
       }
     });
   }, []);
@@ -66,6 +69,7 @@ function App() {
         {/* {user && <Navigate from="/" to="/channels" />} */}
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback={<div>Loading...</div>}>
+          <ErrorPage />
           <Routes>
             <Route path="/login" element={!LoggedInState ? <Login /> : <Navigate to='/'/>}/>
             <Route path="/signup" element={!LoggedInState ? <Signup /> : <Navigate to='/'/>}/>
