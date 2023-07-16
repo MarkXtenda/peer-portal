@@ -46,19 +46,19 @@ function Login() {
               placeholder="Password"
             />
           </div>
-          <div className="form-check">
+          {/* <div className="form-check">
             <input type="checkbox" className="form-check-input" id="remember-me" />
             <label className="form-check-label" htmlFor="remember-me">
               Remember me
             </label>
-          </div>
+          </div> */}
           <button type="submit" className="btn btn-primary btn-block">
             Sign in
           </button>
         </div>
         <footer className="sign-on-footer">
           <p className="mb-0">
-            Don't have an account?
+            Don't have an account?&nbsp;
             <Link className="card-link" to="/signup">
               Sign up
             </Link>

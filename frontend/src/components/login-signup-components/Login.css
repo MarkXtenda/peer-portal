@@ -1,6 +1,7 @@
 .sign-on-container {
-  background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background: url("../../Peer-Portal.png") no-repeat center center fixed;
+  background-size: contain;
+  background-color: #F4F1EB;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -13,6 +14,7 @@
   padding: 20px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.85;
 }
 
 .sign-on-header {
@@ -86,4 +88,8 @@ label {
 
 .card-link {
   color: #7289da;
+}
+
+.sign-on-footer {
+  font-weight: bold;
 }

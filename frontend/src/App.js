@@ -25,18 +25,18 @@ function App() {
   useEffect(() => {
     setIsLoading(true)
     // auto-login
-    fetch("/me").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          dispatch({ type: "user/login", payload: user });
-        });
-        setIsLoading(false)
-      }
-      else {
-        setIsLoading(false)
-        r.json().then((err)=> dispatch(setErrors(err.error)))
-      }
-    });
+      fetch("/me").then((r) => {
+        if (r.ok) {
+          r.json().then((user) => {
+            dispatch({ type: "user/login", payload: user });
+          });
+          setIsLoading(false)
+        }
+        else {
+          setIsLoading(false)
+          // r.json().then((err)=> dispatch(setErrors(err.error)))
+        }
+      });
   }, []);
 
   const ErrorFallback=({error,resetErrorBoundary})=>{

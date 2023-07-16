@@ -9,6 +9,7 @@ class ChatChannel < ApplicationCable::Channel
   def subscribed
     channel_chat = Message.where(channel_id: params[:channel_id])
     serialized_messages = ActiveModel::Serializer::CollectionSerializer.new(channel_chat, serializer: MessageSerializer)
+    # add some general channel information, like channel name photo, users, users name, users photos etc.<<<<<<
     stream_for 'public_chat'
     transmit({ messages: serialized_messages })
   end

@@ -4,6 +4,12 @@
     left: 40vw;
 }
 
+label {
+    
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 .error-block {
     width: 250px;
     padding: 10px;

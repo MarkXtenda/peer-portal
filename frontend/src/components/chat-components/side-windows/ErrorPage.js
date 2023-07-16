@@ -22,7 +22,7 @@ function ErrorPage() {
 
     return(
         <div className='error-box'>
-            {errors.length > 0 ? errors.map((error, index)=><div key={index} className='error-block'>{error}</div>) : null}
+            {errors.length > 0 ? errors.map((error, index)=><div key={index} className='error-block'><label>{error}</label></div>) : null}
             </div>
     )
 }

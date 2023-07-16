@@ -27,6 +27,30 @@ export function fetchLogin(email, password) {
       // });
   }
 
+  export function fetchSignup(userData) {
+    return fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((r) => {
+        if (r.ok) {
+          return r.json();
+        } else {
+          return r.json().then((errorData) => {
+            throw errorData.errors;
+          });
+        }
+      })
+      // .catch((errorData) => {
+      //   console.log(errorData);
+      //   throw errorData.errors;
+      // });
+  }
+  
+
 export function fetchChannels() {
   return fetch("/channels", {
     method: "GET",

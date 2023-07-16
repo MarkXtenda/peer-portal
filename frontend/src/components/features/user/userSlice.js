@@ -1,6 +1,6 @@
 import { chooseChannel } from '../channel/ChannelSlice';
 import { setErrors } from '../errors/errorsSlice';
-import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser, fetchJoinChannel} from '../fetchFunctions';
+import { fetchLogin, fetchLogout, fetchAvatar, fetchSendMessage, fetchRemoveUser, fetchJoinChannel, fetchSignup} from '../fetchFunctions';
 import { settingsHideMenuAction, settingsTogleAction } from '../settings/SettingsSlice';
 
 const initialStateUser = {
@@ -63,6 +63,18 @@ export function loginUser(email, password) {
       }
     };
   }
+
+  export function signupUser(userData) {
+    return async function(dispatch) {
+      try {
+        const user = await fetchSignup(userData);
+        dispatch({ type: "user/login", payload: user });
+      } catch (err) {
+        dispatch(setErrors(err));
+      }
+    };
+  }
+  
 
 export function logoutUser() {
   return async function(dispatch) {
